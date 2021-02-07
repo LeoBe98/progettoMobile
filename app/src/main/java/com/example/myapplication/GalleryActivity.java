@@ -1,25 +1,32 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.myapplication.tools.CreateList;
+import com.example.myapplication.tools.DBHelper;
 import com.example.myapplication.tools.MyAdapter;
+import com.example.myapplication.tools.Utils;
 
 import java.util.ArrayList;
 
 public class GalleryActivity extends AppCompatActivity {
-
+    DrawerLayout drawerLayout;
+    DBHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
-
+        drawerLayout = findViewById(R.id.drawer_layout);
+        db = new DBHelper(this);
         //creo il recyclerview per contenere le foto
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.imagegallery);
         recyclerView.setHasFixedSize(true);
@@ -69,4 +76,66 @@ public class GalleryActivity extends AppCompatActivity {
         }
         return theimage;
     }
+
+    public void ClickMenu(View view)
+    {
+        //Apro il drawer
+        openDrawer(drawerLayout);
+
+    }
+
+    private static void openDrawer(DrawerLayout drawerLayout) {
+        //Apro il drawer layout
+        drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    public void ClickLogo(View view){
+        //chiudo il drawer
+        closeDrawer(drawerLayout);
+    }
+
+    private void closeDrawer(DrawerLayout drawerLayout) {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    public void ClickHome(View view){
+        Intent intent = new Intent(GalleryActivity.this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+    public void ClickProfile(View view){
+        Intent intent = new Intent(GalleryActivity.this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    public void ClickMyChampionship(View view){
+        Intent intent = new Intent(GalleryActivity.this, MyChampionshipActivity.class);
+        startActivity(intent);
+    }
+
+    public void ClickChampionship(View view){
+        Intent intent = new Intent(GalleryActivity.this, ChampionshipsActivity.class);
+        startActivity(intent);
+    }
+
+    public void ClickGallery(View view){
+        recreate();
+    }
+
+    public void ClickLogOut(View view){
+        db.updateStatus(Utils.STATUS_NOT_LOGGED, -1);
+        Intent intent = new Intent(GalleryActivity.this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        closeDrawer(drawerLayout);
+    }
+
 }

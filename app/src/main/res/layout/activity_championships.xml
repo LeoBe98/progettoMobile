@@ -9,18 +9,36 @@
     tools:context=".HomeActivity">
 
 
+
+
+
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include
-            layout="@layout/main_toolbar"/>
+        <include layout="@layout/main_toolbar" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/imagegallery"
+        <TextView
+            android:id="@+id/textview_hello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:text="Lista campionati disponibili"
+            android:textColor="#f41010"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ListView
+            android:id="@+id/lv_championships"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-             />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"/>
+
+
     </LinearLayout>
 
 
@@ -35,5 +53,4 @@
     </RelativeLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout >
-
 

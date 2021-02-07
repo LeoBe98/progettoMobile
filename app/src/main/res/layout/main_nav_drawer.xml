@@ -4,6 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f41010">
 
     <ImageView
         android:layout_width="62dp"
@@ -13,20 +17,19 @@
         android:src="@drawable/base_image" />
 
     <TextView
+        android:id="@+id/menuName"
         android:layout_width="196dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
         android:text="Nome e Cognome"
-        android:textAlignment="center"
-        android:textColor="#f41010"
+        android:textColor="#ffffff"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginLeft="-80dp"
+        android:layout_marginBottom="10dp"/>
+</LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="#636363" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +37,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:onClick="ClickHome"
-        android:layout_margin="5dp">
+        android:layout_margin="10dp">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -53,6 +56,15 @@
             android:textSize="20sp"/>
     </LinearLayout>
 
+    <View
+        android:layout_width="240dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="40dp"
+        android:background="#c0c0c0"/>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,7 +78,7 @@
             android:layout_height="wrap_content"
             android:maxHeight="48dp"
             android:maxWidth="48dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="16dp"
             android:src="@drawable/icon_profile"/>
 
         <TextView
@@ -77,9 +89,16 @@
             android:padding="12dp"
             android:layout_marginEnd="40dp"
             android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:layout_marginStart="4dp"/>
     </LinearLayout>
-
+    <View
+        android:layout_width="240dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="40dp"
+        android:background="#c0c0c0"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -91,20 +110,27 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="15dp"
             android:src="@drawable/icon_mychampionship"/>
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="My Championships"
-            android:padding="12dp"
+            android:layout_marginStart="5dp"
             android:layout_marginEnd="40dp"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:layout_weight="1"
+            android:padding="12dp"
+            android:text="My Championships"
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </LinearLayout>
-
+    <View
+        android:layout_width="240dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="40dp"
+        android:background="#c0c0c0"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -116,20 +142,27 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="16dp"
             android:src="@drawable/icon_championship"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Championship"
+            android:text="Championships"
             android:padding="12dp"
             android:layout_marginEnd="40dp"
             android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:layout_marginStart="4dp"/>
     </LinearLayout>
-
+    <View
+        android:layout_width="240dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="40dp"
+        android:background="#c0c0c0"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -154,14 +187,20 @@
             android:textStyle="bold"
             android:textSize="20sp"/>
     </LinearLayout>
-
+    <View
+        android:layout_width="240dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="40dp"
+        android:background="#c0c0c0"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:onClick="ClickLogOut"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="4dp">
 
         <ImageView
             android:layout_width="wrap_content"

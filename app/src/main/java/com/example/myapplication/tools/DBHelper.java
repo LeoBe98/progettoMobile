@@ -135,6 +135,34 @@ public class DBHelper extends SQLiteOpenHelper {
         return columnsAffected;
     }
 
+    //Championship
+    public Cursor getChampionship(Integer champ_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "select  * from championship where id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(champ_id)});
+        String[] columsArray = cursor.getColumnNames();
+        Log.e("DBHelper.getDisponibleChampionship", columsArray[1]);
+        return cursor;
+    }
+
+    public Cursor getDisponibleChampionship(Integer user_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "select  C1.* from championship  as C1 except select C2.* from championship as C2 join iscription on C2.id = iscription.idCamp where iscription.idUser = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(user_id)});
+        String[] columsArray = cursor.getColumnNames();
+        Log.e("DBHelper.getDisponibleChampionship", columsArray[1]);
+        return cursor;
+    }
+
+    public Cursor getMyChampionship(Integer user_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = " select championship.* from championship join iscription on championship.id = iscription.idCamp where idUser = ?;";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(user_id)});
+        String[] columsArray = cursor.getColumnNames();
+        Log.e("DBHelper.getMyChampionship", columsArray[1]);
+        return cursor;
+    }
+
 
 
     //metodi di popula

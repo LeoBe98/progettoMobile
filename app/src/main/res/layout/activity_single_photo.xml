@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SinglePhoto">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/singlePhoto"
@@ -20,9 +23,13 @@
         android:id="@+id/btn_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="138dp"
-        android:layout_marginBottom="174dp"
-        android:text="Button"
+        android:layout_marginTop="400dp"
+        android:layout_marginLeft="-120dp"
+        android:text="CONVIDIVI"
+        android:background="#f41010"
+        android:textColor="@color/design_default_color_surface"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+</LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

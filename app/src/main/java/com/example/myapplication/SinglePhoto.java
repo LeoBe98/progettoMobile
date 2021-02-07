@@ -2,15 +2,20 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -18,6 +23,7 @@ public class SinglePhoto extends AppCompatActivity {
     ImageView singlePhoto;
     String image;
     Button shareButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +33,8 @@ public class SinglePhoto extends AppCompatActivity {
 
         //Recupero nome immagine e la mostro
         image = getIntent().getStringExtra("imageName");
-        int resID = getResources().getIdentifier(image, "drawable", getPackageName());
+        final int resID = getResources().getIdentifier(image, "drawable", getPackageName());
+
         Log.e("resId", ""+resID);
         singlePhoto.setImageResource(resID);
 
@@ -35,23 +42,23 @@ public class SinglePhoto extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             /*  Log.e("share", "ci sono");
-                Bitmap bm = ((android.graphics.drawable.BitmapDrawable) singlePhoto.getDrawable()).getBitmap();
-                try {
-                    java.io.File file = new java.io.File(getExternalCacheDir() + "/image.jpg");
-                    java.io.OutputStream out = new java.io.FileOutputStream(file);
-                    bm.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                    out.flush();
-                    out.close();
-                } catch (Exception e) {}
-                Intent iten = new Intent(android.content.Intent.ACTION_SEND);*/
-                //iten.setType("*/*");
-                /*
-                iten.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new java.io.File(getExternalCacheDir() + "/image.jpg")));
-                startActivity(Intent.createChooser(iten, "Send image"));*/
+             shareImage(getApplicationContext(), resID);
 
             }
         });
+    }
+
+    public static void shareImage(Context context, Integer resource_id) {
+        Bitmap b = BitmapFactory.decodeResource(context.getResources(), resource_id);
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("image/jpeg");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        b.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), b, "Title", null);
+        Uri imageUri = Uri.parse(path);
+        share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        share.putExtra(Intent.EXTRA_STREAM, imageUri);
+        context.startActivity(Intent.createChooser(share, "Select"));
     }
 
 }
