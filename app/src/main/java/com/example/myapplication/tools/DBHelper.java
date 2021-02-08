@@ -126,6 +126,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public int updateImage(String s, Integer user_id){
+        Log.e("prova update", "questo è invece l'id" +user_id );
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("profilePhoto", s);
+        int columnsAffected = db.update(TABLE_USERS, contentValues, "users.id = '" +user_id+"'", null);
+        return columnsAffected;
+    }
+
     public int updateStatus(int status, int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -138,10 +147,9 @@ public class DBHelper extends SQLiteOpenHelper {
     //Championship
     public Cursor getChampionship(Integer champ_id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "select  * from championship where id = ?";
+        String query = "select * from championship where id = ?";
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(champ_id)});
         String[] columsArray = cursor.getColumnNames();
-        Log.e("DBHelper.getDisponibleChampionship", columsArray[1]);
         return cursor;
     }
 
@@ -149,6 +157,15 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "select  C1.* from championship  as C1 except select C2.* from championship as C2 join iscription on C2.id = iscription.idCamp where iscription.idUser = ?";
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(user_id)});
+        String[] columsArray = cursor.getColumnNames();
+        Log.e("DBHelper.getDisponibleChampionship", columsArray[1]);
+        return cursor;
+    }
+
+    public Cursor getCalendarChampionship(Integer champion_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "select * from Calendar where idCamp = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(champion_id)});
         String[] columsArray = cursor.getColumnNames();
         Log.e("DBHelper.getDisponibleChampionship", columsArray[1]);
         return cursor;
@@ -164,7 +181,28 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
+    public void addIscription(Integer idUser, Integer idCamp) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("idUser", idUser);
+        cv.put("idCamp", idCamp);
+        long res = db.insert(TABLE_INSCRIPTION, null, cv);
+        Log.e("debug db", ""+res);
+        db.close();
 
+
+    }
+
+    public void deleteIscription(Integer idUser, Integer idCamp) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        long res = db.delete(TABLE_INSCRIPTION, "iscription.idUser = '" +idUser+"' and iscription.idCamp = '"+idCamp+"'", null);
+        Log.e("debug db", ""+res);
+        db.close();
+
+
+    }
     //metodi di popula
     public void populationChampionship(SQLiteDatabase db){
         String insertChampionship1 = "INSERT INTO Championship (id, name, logo, flags, fuel_consumption, tires_consumption, help, car_list) VALUES (0, 'Leon Supercopa', 'logo', 'Solo nere', 'Normale', 'Normale', 'Frizione automatica', 'Seat Leon' )";

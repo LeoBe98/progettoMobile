@@ -26,7 +26,7 @@ public class MyChampionshipActivity extends AppCompatActivity {
     ListView lv_mychampionship;
     DrawerLayout drawerLayout;
     Integer userId;
-    static ChampionshipAdapter championshipAdapter;
+    static AdapterChampionship adapterChampionship;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,16 +74,15 @@ public class MyChampionshipActivity extends AppCompatActivity {
 
 
         }
-        championshipAdapter = new ChampionshipAdapter(MyChampionshipActivity.this, mychampionshipList);
-        lv_mychampionship.setAdapter(championshipAdapter);
+        adapterChampionship = new AdapterChampionship(MyChampionshipActivity.this, mychampionshipList);
+        lv_mychampionship.setAdapter(adapterChampionship);
 
         lv_mychampionship.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Intent intent = new Intent(MyChampionshipActivity.this, InscriptionChampionship.class);
+                Intent intent = new Intent(MyChampionshipActivity.this, InscriptionChampionshipActivity.class);
                 intent.putExtra("champId", mychampionshipList.get(i).getID());
-
                 startActivity(intent);
 
             }
@@ -129,6 +128,7 @@ public class MyChampionshipActivity extends AppCompatActivity {
 
     public void ClickChampionship(View view){
         Intent intent = new Intent(MyChampionshipActivity.this, ChampionshipsActivity.class);
+        intent.putExtra("userId", Utils.USER.getID());
         startActivity(intent);
     }
 

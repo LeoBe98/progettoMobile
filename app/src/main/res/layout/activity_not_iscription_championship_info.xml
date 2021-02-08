@@ -15,51 +15,46 @@
 
         <include layout="@layout/main_toolbar" />
 
-        <TextView
-            android:id="@+id/tv_name_iscription_championship"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nome campionato"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            android:textColor="#BA1515"/>
-        <Button
-            android:id="@+id/btn_disiscription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="Disiscriviti"
-            android:layout_marginTop="-40dp"
-            android:backgroundTint="#BA1515"
-            android:textColor="#fff"
-            android:textStyle="bold"/>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="498dp"
-            android:fillViewport="true">
-
-            <ListView
-                android:id="@+id/lv_races_iscription_championship"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
-        </ScrollView>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tv_setting_championship_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Settings"
+                android:textColor="#000"
+                android:textSize="28dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_name_not_iscription_championship_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nome campionato"
+                android:textColor="#BA1515"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="450dp">
+
             <Button
-                android:id="@+id/btn_championship_to_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:backgroundTint="#BA1515"
                 android:text="Info"
                 android:textColor="#fff"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:enabled="false"/>
 
 
             <Button
@@ -68,7 +63,6 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="-50dp"
                 android:backgroundTint="#BA1515"
-                android:enabled="false"
                 android:text="Calendar"
                 android:textColor="#fff"
                 android:textStyle="bold" />

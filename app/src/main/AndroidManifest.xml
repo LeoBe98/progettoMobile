@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.myapplication">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,9 +13,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".InscriptionChampionship"></activity>
         <activity
-            android:name=".SinglePhoto"
+            android:name=".IscriptionChampionshipRaceActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".NotIscriptionChampionshipRaceActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".IscriptionChampionshipRankActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".IscriptionChampionshipInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".NotIscriptionChampionshipRankActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".NotIscriptionChampionshipInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".NotInscriptionChampionshipActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".InscriptionChampionshipActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".SinglePhotoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".tools.MyAdapter"
@@ -61,8 +80,5 @@
                 android:resource="@xml/provider_paths" />
         </provider>
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

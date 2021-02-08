@@ -1,8 +1,6 @@
 package com.example.myapplication;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,23 +9,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication.tools.Championship;
-import com.example.myapplication.tools.Utils;
 
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
-public class ChampionshipAdapter extends ArrayAdapter<Championship> {
+public class AdapterChampionship extends ArrayAdapter<Championship> {
 
     private ArrayList<Championship> championship;
     private Activity context;
 
 
-    public ChampionshipAdapter(Activity _context, ArrayList<Championship> _championship) {
-        super(_context, R.layout.championship_item, _championship);
+    public AdapterChampionship(Activity _context, ArrayList<Championship> _championship) {
+        super(_context, R.layout.item_championship, _championship);
         this.context = _context;
         this.championship = _championship;
     }
@@ -36,14 +31,14 @@ public class ChampionshipAdapter extends ArrayAdapter<Championship> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View r = convertView;
-        ChampionshipAdapter.ViewHolder viewHolder = null;
+        AdapterChampionship.ViewHolder viewHolder = null;
         if (r == null) {
             LayoutInflater layoutInflater = context.getLayoutInflater();
-            r = layoutInflater.inflate(R.layout.championship_item, null);
-            viewHolder = new  ChampionshipAdapter.ViewHolder(r);
+            r = layoutInflater.inflate(R.layout.item_championship, null);
+            viewHolder = new  AdapterChampionship.ViewHolder(r);
             r.setTag(viewHolder);
         } else {
-            viewHolder = ( ChampionshipAdapter.ViewHolder) r.getTag();
+            viewHolder = ( AdapterChampionship.ViewHolder) r.getTag();
         }
 
         String championship_name = championship.get(position).getNAME();

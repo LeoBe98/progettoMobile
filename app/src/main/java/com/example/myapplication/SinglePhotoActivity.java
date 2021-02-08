@@ -19,7 +19,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
-public class SinglePhoto extends AppCompatActivity {
+public class SinglePhotoActivity extends AppCompatActivity {
     ImageView singlePhoto;
     String image;
     Button shareButton;
@@ -43,22 +43,30 @@ public class SinglePhoto extends AppCompatActivity {
             @Override
             public void onClick(View v) {
              shareImage(getApplicationContext(), resID);
+                Bitmap b = BitmapFactory.decodeResource(getApplicationContext().getResources(), resID);
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                share.setType("image/jpeg");
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                b.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
 
+
+                String path = MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(), b, "Img", null);
+                Uri imageUri = Uri.parse(path);
+
+
+                share.putExtra(Intent.EXTRA_STREAM, imageUri);
+                getApplicationContext().startActivity(Intent.createChooser(share, "Share image to..."));
             }
         });
     }
 
     public static void shareImage(Context context, Integer resource_id) {
-        Bitmap b = BitmapFactory.decodeResource(context.getResources(), resource_id);
-        Intent share = new Intent(Intent.ACTION_SEND);
-        share.setType("image/jpeg");
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        b.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), b, "Title", null);
-        Uri imageUri = Uri.parse(path);
-        share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        share.putExtra(Intent.EXTRA_STREAM, imageUri);
-        context.startActivity(Intent.createChooser(share, "Select"));
+
+
+    /*    */
+
+
     }
 
 }

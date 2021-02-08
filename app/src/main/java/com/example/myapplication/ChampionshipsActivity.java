@@ -26,7 +26,7 @@ public class ChampionshipsActivity extends AppCompatActivity {
     ListView lv_championship;
     DrawerLayout drawerLayout;
     Integer userId;
-    static ChampionshipAdapter championshipAdapter;
+    static AdapterChampionship adapterChampionship;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,19 +70,22 @@ public class ChampionshipsActivity extends AppCompatActivity {
         }
 
 
-        championshipAdapter = new ChampionshipAdapter(ChampionshipsActivity.this, championshipList);
-        lv_championship.setAdapter(championshipAdapter);
+        adapterChampionship = new AdapterChampionship(ChampionshipsActivity.this, championshipList);
+        lv_championship.setAdapter(adapterChampionship);
 
 
         lv_championship.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                Intent intent = new Intent(ChampionshipsActivity.this, NotInscriptionChampionshipActivity.class);
+                intent.putExtra("champId", championshipList.get(i).getID());
+                startActivity(intent);
 
-                Toast.makeText(ChampionshipsActivity.this, "Elemento: " + i + "; testo: " + championshipList.get(i).getNAME(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
     //METODI MENU
     public void ClickMenu(View view)
@@ -120,6 +123,7 @@ public class ChampionshipsActivity extends AppCompatActivity {
 
     public void ClickMyChampionship(View view){
         Intent intent = new Intent(ChampionshipsActivity.this, MyChampionshipActivity.class);
+        intent.putExtra("userId", Utils.USER.getID());
         startActivity(intent);
     }
 

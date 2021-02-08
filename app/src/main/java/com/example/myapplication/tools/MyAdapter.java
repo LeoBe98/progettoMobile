@@ -1,25 +1,17 @@
 package com.example.myapplication.tools;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.myapplication.GalleryActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.RegisterActivity1;
-import com.example.myapplication.RegisterActivity2;
-import com.example.myapplication.SinglePhoto;
+import com.example.myapplication.SinglePhotoActivity;
 
 import java.util.ArrayList;
 
@@ -50,7 +42,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 String imTitle = galleryList.get(i).getImage_title();
-                Intent intent= new Intent(context, SinglePhoto.class);
+                Intent intent= new Intent(context, SinglePhotoActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("imageName", imTitle);
 
