@@ -1,0 +1,2 @@
+- Controllo registrazione dati
+- Abbellimento login e registrazione
