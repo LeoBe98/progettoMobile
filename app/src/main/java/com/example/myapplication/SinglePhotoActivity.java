@@ -23,7 +23,7 @@ public class SinglePhotoActivity extends AppCompatActivity {
     ImageView singlePhoto;
     String image;
     Button shareButton;
-
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,21 +42,24 @@ public class SinglePhotoActivity extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             shareImage(getApplicationContext(), resID);
+            /* shareImage(getApplicationContext(), resID);
+                //Recupero Imm
                 Bitmap b = BitmapFactory.decodeResource(getApplicationContext().getResources(), resID);
-                Intent share = new Intent(Intent.ACTION_SEND);
-                share.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                share.setType("image/jpeg");
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 b.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-
-
                 String path = MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(), b, "Img", null);
                 Uri imageUri = Uri.parse(path);
 
 
-                share.putExtra(Intent.EXTRA_STREAM, imageUri);
-                getApplicationContext().startActivity(Intent.createChooser(share, "Share image to..."));
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, imageUri);
+
+
+                Intent startIntent = Intent.createChooser(sharingIntent, context.getResources().getString(R.string.app_name));
+                startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(startIntent);*/
             }
         });
     }

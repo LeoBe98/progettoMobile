@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class InscriptionChampionshipActivity extends AppCompatActivity {
     DBHelper db;
     Integer champId;
-    Button btn_disiscription, btn_move_info;
+    Button btn_disiscription, btn_move_info, btn_move_rank;
     TextView nameChampionship;
     Championship championship;
     Race race;
@@ -39,6 +39,7 @@ public class InscriptionChampionshipActivity extends AppCompatActivity {
         nameChampionship = (TextView) findViewById(R.id.tv_name_iscription_championship);
         btn_disiscription = (Button) findViewById(R.id.btn_disiscription);
         btn_move_info = (Button) findViewById(R.id.btn_championship_to_info);
+        btn_move_rank = (Button) findViewById(R.id.btn_championship_to_rank);
         lv_race = (ListView) findViewById(R.id.lv_races_iscription_championship);
         raceList = new ArrayList<>();
         Intent i = getIntent();
@@ -104,6 +105,15 @@ public class InscriptionChampionshipActivity extends AppCompatActivity {
         });
 
         btn_move_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InscriptionChampionshipActivity.this, IscriptionChampionshipInfoActivity.class);
+                intent.putExtra("champId", champId);
+                startActivity(intent);
+            }
+        });
+
+        btn_move_rank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(InscriptionChampionshipActivity.this, IscriptionChampionshipInfoActivity.class);

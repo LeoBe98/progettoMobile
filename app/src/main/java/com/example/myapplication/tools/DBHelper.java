@@ -17,6 +17,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_CHAMPIONSHIP = "Championship";
     public static final String TABLE_CALENDAR = "Calendar";
     public static final String TABLE_INSCRIPTION = "Iscription";
+    public static final String TABLE_RANK_PILOT = "RankPilot";
+    public static final String TABLE_RANK_TEAM = "RankTeam";
 
 
     public DBHelper(Context context) {
@@ -45,21 +47,25 @@ public class DBHelper extends SQLiteOpenHelper {
         String iscription = "CREATE TABLE Iscription (idIscription INTEGER PRIMARY KEY AUTOINCREMENT, idUser INTEGER, idCamp INTEGER, FOREIGN KEY (idCamp) REFERENCES Championship(id), FOREIGN KEY (idUser) REFERENCES Users(id) ) ";
         db.execSQL(iscription);
 
-      /*  String pilots = "CREATE TABLE Pilots (idPilot INTEGER PRIMARY KEY AUTOINCREMENT, idcamp INTEGER, name TEXT, team TEXT, car TEXT, FOREIGN KEY (idCamp) REFERENCES Championship(id))";
-        db.execSQL(pilots);
-
+        //Creo tabelle per le classifiche
+        String pilot = "CREATE TABLE RankPilot (idPilot INTEGER PRIMARY KEY AUTOINCREMENT, idCamp INTEGER, name TEXT, team TEXT, car TEXT, points INTEGER, FOREIGN KEY (idCamp) REFERENCES Championship(id) ) ";
+        db.execSQL(pilot);
+        String team = "CREATE TABLE RankTeam (idTeam INTEGER PRIMARY KEY AUTOINCREMENT, idCamp INTEGER, name TEXT, car TEXT, points INTEGER, FOREIGN KEY (idCamp) REFERENCES Championship(id) ) ";
+        db.execSQL(team);
+        populationRank(db);
 
 
         String rankPilot = "CREATE TABLE Rank_Pilot (idCamp INTEGER, idPilot INTEGER, pointS INTEGER, car STRING)";
         db.execSQL(rankPilot);
         String rankTeam = "CREATE TABLE Rank_Pilot (idCamp INTEGER, idPilot INTEGER, pointS INTEGER, car STRING)";
-        db.execSQL(rankTeam);*/
+        db.execSQL(rankTeam);
 
         String status = "CREATE TABLE Status (status INTEGER, userId INTEGER)";
         String insertStatus = "INSERT INTO status (Status, userId) VALUES (0, -1)";
         db.execSQL(status);
         db.execSQL(insertStatus);
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -180,6 +186,26 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor getPilotByChampionship(Integer cham_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = " select RankPilot.* from RankPilot where idChamp = ?;";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(cham_id)});
+        String[] columsArray = cursor.getColumnNames();
+        Log.e("DBHelper.getMyChampionship", columsArray[1]);
+        return cursor;
+    }
+
+
+    public Cursor getTeamByChampionship(Integer user_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = " select RankTeam.* from RankTeam where idChamp = ?;";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(user_id)});
+        String[] columsArray = cursor.getColumnNames();
+        Log.e("DBHelper.getMyChampionship", columsArray[1]);
+        return cursor;
+    }
+
+
 
     public void addIscription(Integer idUser, Integer idCamp) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -240,4 +266,32 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     }
+
+    private void populationRank(SQLiteDatabase db) {
+        String insertRankPilot1 = "INSERT INTO RankPilot (idCamp, name, team, car, points) VALUES (0, 'Roberto Cosi', 'Buster eRacing Team', 'Seat Leon', 50) ";
+        String insertRankPilot2 = "INSERT INTO RankPilot (idCamp, name, team, car, points) VALUES (0, 'Giacomo Lapadula', 'Naja Racing Italia', 'Seat Leon', 34) ";
+        String insertRankPilot3= "INSERT INTO RankPilot (idCamp, name, team, car, points) VALUES (0, 'Andrea Crespi', 'Handy Racing Team', 'Seat Leon', 21) ";
+        String insertRankPilot4 = "INSERT INTO RankPilot (idCamp, name, team, car, points) VALUES (0, 'Gennaro Deiulis', 'Team SSD', 'Seat Leon', 12) ";
+        String insertRankPilot5 = "INSERT INTO RankPilot (idCamp, name, team, car, points) VALUES (0, 'Fabio Narduzzo', 'Buster eRacing Team', 'Seat Leon', 32) ";
+        String insertRankPilot6 = "INSERT INTO RankPilot (idCamp, name, team,car, points) VALUES (0, 'Roberto Contino', 'Handy Racing Team', 'Seat Leon', 25) ";
+        String insertRankPilot7 = "INSERT INTO RankPilot (idCamp, name, team,car, points) VALUES (1, 'Gianluca De Matteo', 'Buster eRacing Team', 'Honda Civic', 87) ";
+        String insertRankPilot8 = "INSERT INTO RankPilot (idCamp, name, team,car, points) VALUES (1, 'Claudio Gasperini', 'Panzer Team', 'Peugeot 308', 42) ";
+        String insertRankPilot9 = "INSERT INTO RankPilot (idCamp, name, team,car, points) VALUES (1, 'Marco Mazzetti', 'Handy Racing Team', 'VW Golf', 68) ";
+        String insertRankPilot10 = "INSERT INTO RankPilot (idCamp, name, team,car, points) VALUES (1, 'Dario Raffaeta', 'Indipendente', 'Alfa Romeo Giulietta', 10) ";
+        String insertRankPilot11= "INSERT INTO RankPilot (idCamp, name, team,car, points) VALUES (1, 'Ugo Federico Bagnasco', 'Buster eRacing Team', 'Honda Civic', 41) ";
+        String insertRankPilot12 = "INSERT INTO RankPilot (idCamp, name, team,car, points) VALUES (1, 'Enrico Sancini', 'Handy Racing Team', 'VW Golf', 54) ";
+        db.execSQL(insertRankPilot1);db.execSQL(insertRankPilot2);db.execSQL(insertRankPilot3);db.execSQL(insertRankPilot4);db.execSQL(insertRankPilot5);db.execSQL(insertRankPilot6);
+        db.execSQL(insertRankPilot7);db.execSQL(insertRankPilot8);db.execSQL(insertRankPilot9);db.execSQL(insertRankPilot10);db.execSQL(insertRankPilot11);db.execSQL(insertRankPilot12);
+        String insertTeam1 = "INSERT INTO RankTeam (idCamp, name, car, points) VALUES (0, 'Busters eRacing Team', 'Seat Leon', 82)";
+        String insertTeam2 = "INSERT INTO RankTeam (idCamp, name, car, points) VALUES (0, 'Naja Racing Italia', 'Seat Leon', 34)";
+        String insertTeam3 = "INSERT INTO RankTeam (idCamp, name, car, points) VALUES (0, 'Handy Racing Team', 'Seat Leon', 46)";
+        String insertTeam4 = "INSERT INTO RankTeam (idCamp, name, car, points) VALUES (0, 'Team SSD', 'Seat Leon', 12)";
+        String insertTeam5 = "INSERT INTO RankTeam (idCamp, name, car, points) VALUES (0, 'Busters eRacing Team', 'Honda Civic', 128)";
+        String insertTeam6 = "INSERT INTO RankTeam (idCamp, name, car, points) VALUES (0, 'Panzer Team', 'Peugeot 308', 42)";
+        String insertTeam7 = "INSERT INTO RankTeam (idCamp, name, car, points) VALUES (0, 'Handy Racing Team', 'VW Golf', 122)";
+        String insertTeam8 = "INSERT INTO RankTeam (idCamp, name, car, points) VALUES (0, 'Indipendente', 'Alfa Romeo Giulietta', 10)";
+        db.execSQL(insertTeam1);db.execSQL(insertTeam2);db.execSQL(insertTeam3);db.execSQL(insertTeam4);
+        db.execSQL(insertTeam5);db.execSQL(insertTeam6);db.execSQL(insertTeam7);db.execSQL(insertTeam8);
+    }
+
 }
