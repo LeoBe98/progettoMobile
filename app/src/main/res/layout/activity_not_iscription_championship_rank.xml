@@ -30,7 +30,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="250dp">
+            android:layout_height="220dp"
+            android:fillViewport="true">
 
             <ListView
                 android:id="@+id/lv_rank_user_not_iscription_championship"
@@ -48,11 +49,13 @@
             android:textColor="#BA1515"
             android:textSize="20dp"
             android:textStyle="bold"
+            android:layout_marginTop="30dp"
             />
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="250dp">
+            android:layout_height="220dp"
+            android:fillViewport="true">
 
             <ListView
                 android:id="@+id/lv_rank_team_not_iscription_championship"
@@ -68,9 +71,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="20dp"
+            >
 
             <Button
+                android:id="@+id/btn_not_inscription_rank_to_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -81,6 +88,7 @@
 
 
             <Button
+                android:id="@+id/btn_not_inscription_rank_to_championship"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

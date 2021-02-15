@@ -18,68 +18,234 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_setting_championship_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Settings"
-                android:textColor="#000"
-                android:textSize="28dp"
-                android:textStyle="bold" />
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp">
 
             <TextView
                 android:id="@+id/tv_name_not_iscription_championship_info"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nome campionato"
                 android:textColor="#BA1515"
                 android:textSize="30dp"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/logonotChamp"
+                android:layout_width="wrap_content"
+                android:layout_height="147dp"
+                android:maxHeight="200dp"
+                android:src="@drawable/img1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="50dp">
+
+                <TextView
+                    android:id="@+id/tv_setting_flags_championship_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Flags"
+                    android:textColor="#000"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="right"/>
+
+                <TextView
+                    android:id="@+id/tv_not_setting_flags_result_championship_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Flags"
+                    android:textColor="#000"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="165dp"/>
+            </LinearLayout>
+            <View
+                android:layout_width="320dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="-32dp"
+                android:background="#BA1515"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="50dp">
+
+                <TextView
+                    android:id="@+id/tv_setting_driving_aids_championship_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Driving aids"
+                    android:textColor="#000"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="right"/>
+
+                <TextView
+                    android:id="@+id/tv_not_setting_driving_aids_result_championship_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Driving aids"
+                    android:textColor="#000"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="105dp"/>
+            </LinearLayout>
+            <View
+                android:layout_width="320dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="-32dp"
+                android:background="#BA1515"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="50dp">
+
+                <TextView
+                    android:id="@+id/tv_setting_tire_wear_championship_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tire wear"
+                    android:textColor="#000"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="right"/>
+
+                <TextView
+                    android:id="@+id/tv_not_setting_tire_wear_result_championship_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tire wear"
+                    android:textColor="#000"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="128dp"/>
+            </LinearLayout>
+            <View
+                android:layout_width="320dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="-32dp"
+                android:background="#BA1515"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="50dp">
+
+                <TextView
+                    android:id="@+id/tv_setting_FuelConsumption_championship_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fuel Consumption"
+                    android:textColor="#000"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="right"/>
+
+                <TextView
+                    android:id="@+id/tv_not_setting_FuelConsumption_result_championship_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fuel Consumption"
+                    android:textColor="#000"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="50dp"/>
+            </LinearLayout>
+            <View
+                android:layout_width="320dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="-32dp"
+                android:background="#BA1515"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="50dp">
+
+                <TextView
+                    android:id="@+id/not_forum_championship_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Forum: "
+                    android:textColor="#000"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="right"
+                    android:autoLink="web"/>
+
+            </LinearLayout>
+            <View
+                android:layout_width="320dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="-32dp"
+                android:background="#BA1515"/>
+
         </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="450dp">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:backgroundTint="#BA1515"
-                android:text="Info"
-                android:textColor="#fff"
-                android:textStyle="bold"
-                android:enabled="false"/>
-
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="-50dp"
-                android:backgroundTint="#BA1515"
-                android:text="Calendar"
-                android:textColor="#fff"
-                android:textStyle="bold" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="-50dp"
-                android:backgroundTint="#BA1515"
-                android:text="Rank"
-                android:textColor="#fff"
-                android:textStyle="bold" />
-
-        </LinearLayout>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="bottom">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:backgroundTint="#BA1515"
+            android:text="Info"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:enabled="false"/>
+
+
+        <Button
+            android:id="@+id/btn_not_inscription_info_to_championship"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-50dp"
+            android:backgroundTint="#BA1515"
+            android:text="Calendar"
+            android:textColor="#fff"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_not_inscription_info_to_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="-50dp"
+            android:backgroundTint="#BA1515"
+            android:text="Rank"
+            android:textColor="#fff"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
 
 
     <RelativeLayout

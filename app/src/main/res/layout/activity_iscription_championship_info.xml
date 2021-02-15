@@ -18,7 +18,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp">
 
             <TextView
                 android:id="@+id/tv_name_iscription_championship_info"
@@ -29,11 +30,18 @@
                 android:textSize="30dp"
                 android:textStyle="bold" />
 
+            <ImageView
+                android:id="@+id/logoChamp"
+                android:layout_width="wrap_content"
+                android:layout_height="130dp"
+                android:maxHeight="200dp"
+                android:src="@drawable/img1" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="50dp">
+                android:layout_marginTop="30dp">
 
                 <TextView
                     android:id="@+id/tv_setting_flags_championship_info"
@@ -165,7 +173,42 @@
                 android:layout_marginBottom="-32dp"
                 android:background="#BA1515"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="50dp">
+
+                <TextView
+                    android:id="@+id/forum_championship_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Forum: "
+                    android:textColor="#000"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="right"
+                    android:autoLink="web"/>
+
+            </LinearLayout>
+            <View
+                android:layout_width="320dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="4dp"
+                android:background="#BA1515"/>
+
+            <Button
+                android:id="@+id/btn_notify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:backgroundTint="#BA1515"
+                android:text="Modify flags for notify"
+                android:layout_marginTop="20dp"
+                android:textColor="#fff"
+                android:textStyle="bold" />
         </LinearLayout>
+
 
 
     </LinearLayout>
@@ -174,7 +217,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="500dp">
+            android:gravity="bottom">
 
             <Button
                 android:layout_width="wrap_content"
@@ -188,6 +231,7 @@
 
 
             <Button
+                android:id="@+id/btn_inscription_info_to_championship"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -198,6 +242,7 @@
                 android:textStyle="bold" />
 
             <Button
+                android:id="@+id/btn_inscription_info_to_rank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"

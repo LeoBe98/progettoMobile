@@ -1,6 +1,6 @@
 package com.example.myapplication.tools;
 
-public class Pilot {
+public class Pilot implements Comparable<Pilot> {
 
 
     public Integer getID_CHAMP() {
@@ -56,6 +56,14 @@ public class Pilot {
         this.TEAM = TEAM;
         this.CAR = CAR;
         this.POINTS = POINTS;
+    }
+
+    @Override
+    public int compareTo(Pilot u) {
+        if (getPOINTS() == null || u.getPOINTS() == null) {
+            return 0;
+        }
+        return getPOINTS().compareTo(u.getPOINTS());
     }
 
 

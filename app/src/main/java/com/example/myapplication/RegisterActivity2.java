@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class RegisterActivity2 extends AppCompatActivity {
 
@@ -51,23 +52,57 @@ public class RegisterActivity2 extends AppCompatActivity {
                 lovedCar = lovedCar_fieldRegister.getText().toString();
 
 
+
                 Intent intent = new Intent(RegisterActivity2.this, RegisterActivity3.class);
               //invio i dati
-                intent.putExtra("name", name );
-                intent.putExtra("lastname", lastname );
-                intent.putExtra("birthdate", birthdate );
-                intent.putExtra("fullAddress", fullAddress );
-                intent.putExtra("city", city );
-                intent.putExtra("postalcode", postalcode );
-                intent.putExtra("email", email );
-                intent.putExtra("password", password );
-                intent.putExtra("repeatPassword", repeatPassword );
-                intent.putExtra("raceNumber", raceNumber );
-                intent.putExtra("lovedCircuit", lovedCircuit );
-                intent.putExtra("hatedCircuit", hatedCircuit );
-                intent.putExtra("lovedCar", lovedCar );
-                startActivity(intent);
+                if (checkData(raceNumber, lovedCircuit, hatedCircuit, lovedCar)) {
+                    //invio dati all'activity seguente
+                    intent.putExtra("name", name);
+                    intent.putExtra("lastname", lastname);
+                    intent.putExtra("birthdate", birthdate);
+                    intent.putExtra("fullAddress", fullAddress);
+                    intent.putExtra("city", city);
+                    intent.putExtra("postalcode", postalcode);
+                    intent.putExtra("email", email);
+                    intent.putExtra("password", password);
+                    intent.putExtra("repeatPassword", repeatPassword);
+                    intent.putExtra("raceNumber", raceNumber);
+                    intent.putExtra("lovedCircuit", lovedCircuit);
+                    intent.putExtra("hatedCircuit", hatedCircuit);
+                    intent.putExtra("lovedCar", lovedCar);
+                    startActivity(intent);
+                }
             }
         });
+    }
+
+    private boolean checkData(String _raceNumber, String _lovedCircuit, String _hatedCircuit, String _lovedCar) {
+        if(_raceNumber.isEmpty() || _lovedCircuit.isEmpty() || _hatedCircuit.isEmpty() || _lovedCar.isEmpty()){
+            Toast.makeText(RegisterActivity2.this, "Completa tutti i campi", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if(!checkRaceNumber(_raceNumber)){
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean checkRaceNumber(String _raceNumber) {
+        try {
+            int controlNumber = Integer.parseInt(_raceNumber);
+            if (controlNumber < 0) {
+                Toast.makeText(RegisterActivity2.this, "No negative number", Toast.LENGTH_LONG).show();
+                return false;
+            }
+            if (_raceNumber.length() > 2) {
+                Toast.makeText(RegisterActivity2.this, "Race Number must be between 0 and 99", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        } catch (NumberFormatException ex) {
+            Toast.makeText(RegisterActivity2.this, "Race Number must be a number", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 }

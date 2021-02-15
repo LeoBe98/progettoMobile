@@ -1,12 +1,15 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,10 +33,15 @@ public class InscriptionChampionshipActivity extends AppCompatActivity {
     ListView lv_race;
     AdapterRace adapterRace;
 
+
+    Integer userId;
+    DrawerLayout drawerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inscription_championship);
+        userId = Utils.USER.getID();
+        drawerLayout = findViewById(R.id.drawer_layout);
 
         db = new DBHelper(this);
         nameChampionship = (TextView) findViewById(R.id.tv_name_iscription_championship);
@@ -81,16 +89,23 @@ public class InscriptionChampionshipActivity extends AppCompatActivity {
             String circuit = (getCalendarioChampionship.getString(getCalendarioChampionship.getColumnIndex("circuit")));
             String data = (getCalendarioChampionship.getString(getCalendarioChampionship.getColumnIndex("data")));
             race = new Race(id_cal, id_camp, circuit, data);
-            Log.e("circuit", circuit);
-            // Log.e("before add " +k, toAdd.getNAME());
             raceList.add(race);
-            //  Log.e("after add " +k, listToAdd.get(k).getNAME() );
         }
         adapterRace = new AdapterRace(InscriptionChampionshipActivity.this, raceList);
         lv_race.setAdapter(adapterRace);
 
 
+        lv_race.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                Intent intent = new Intent(InscriptionChampionshipActivity.this, IscriptionChampionshipRaceActivity.class);
+                intent.putExtra("raceId", raceList.get(i).getID());
+                intent.putExtra("champId", champId);
+                startActivity(intent);
+
+            }
+        });
 
 
         btn_disiscription.setOnClickListener(new View.OnClickListener() {
@@ -116,10 +131,77 @@ public class InscriptionChampionshipActivity extends AppCompatActivity {
         btn_move_rank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(InscriptionChampionshipActivity.this, IscriptionChampionshipInfoActivity.class);
+                Intent intent = new Intent(InscriptionChampionshipActivity.this, IscriptionChampionshipRankActivity.class);
                 intent.putExtra("champId", champId);
                 startActivity(intent);
             }
         });
     }
+
+    //region MENU
+    public void ClickMenu(View view)
+    {
+        //Apro il drawer
+        openDrawer(drawerLayout);
+
+    }
+
+    private static void openDrawer(DrawerLayout drawerLayout) {
+        //Apro il drawer layout
+        drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    public void ClickLogo(View view){
+        //chiudo il drawer
+        closeDrawer(drawerLayout);
+    }
+
+    private void closeDrawer(DrawerLayout drawerLayout) {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    public void ClickHome(View view){
+        Intent intent = new Intent(InscriptionChampionshipActivity.this, HomeActivity.class);
+        intent.putExtra("userId", userId);
+        startActivity(intent);
+    }
+
+    public void ClickProfile(View view){
+        Intent intent = new Intent(InscriptionChampionshipActivity.this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    public void ClickMyChampionship(View view){
+        Intent intent = new Intent(InscriptionChampionshipActivity.this, MyChampionshipActivity.class);
+        intent.putExtra("userId", userId);
+        startActivity(intent);
+    }
+
+    public void ClickChampionship(View view){
+        Intent intent = new Intent(InscriptionChampionshipActivity.this, ChampionshipsActivity.class);
+        intent.putExtra("userId", userId);
+        startActivity(intent);
+    }
+
+    public void ClickGallery(View view){
+        Intent intent = new Intent(InscriptionChampionshipActivity.this, GalleryActivity.class);
+        startActivity(intent);
+    }
+
+    public void ClickLogOut(View view){
+        db.updateStatus(Utils.STATUS_NOT_LOGGED, -1);
+        Intent intent = new Intent(InscriptionChampionshipActivity.this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        closeDrawer(drawerLayout);
+    }
+    //endregion
 }

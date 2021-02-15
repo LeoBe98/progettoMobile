@@ -6,15 +6,20 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.tools.Championship;
 import com.example.myapplication.tools.DBHelper;
+import com.example.myapplication.tools.ProfileImage;
 import com.example.myapplication.tools.Utils;
 
 import java.util.ArrayList;
@@ -51,6 +56,14 @@ public class ChampionshipsActivity extends AppCompatActivity {
             }
         }
 
+        TextView nome = (TextView) findViewById(R.id.menuName);
+        nome.setText(Utils.USER.getNAME() + " " + Utils.USER.getLASTNAME());
+        if (Utils.USER.getPROFILEPHOTO() != "") {
+            Bitmap bitmapProfile = ProfileImage.StringToBitMap(Utils.USER.getPROFILEPHOTO());
+            ImageView profileMenu = (ImageView) findViewById(R.id.menuProfileImage);
+            profileMenu.setImageBitmap(bitmapProfile);
+        }
+
         Cursor getDisponibleChampionship = db.getDisponibleChampionship(userId);
         for( getDisponibleChampionship.moveToFirst(); !getDisponibleChampionship.isAfterLast(); getDisponibleChampionship.moveToNext() ) {
             Integer id  = (getDisponibleChampionship.getInt(getDisponibleChampionship.getColumnIndex("id")));
@@ -68,6 +81,8 @@ public class ChampionshipsActivity extends AppCompatActivity {
 
 
         }
+
+
 
 
         adapterChampionship = new AdapterChampionship(ChampionshipsActivity.this, championshipList);

@@ -7,13 +7,17 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.tools.CreateList;
 import com.example.myapplication.tools.DBHelper;
 import com.example.myapplication.tools.MyAdapter;
+import com.example.myapplication.tools.ProfileImage;
 import com.example.myapplication.tools.Utils;
 
 import java.util.ArrayList;
@@ -21,12 +25,23 @@ import java.util.ArrayList;
 public class GalleryActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     DBHelper db;
+    Integer userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
         drawerLayout = findViewById(R.id.drawer_layout);
         db = new DBHelper(this);
+        userId = Utils.USER.getID();
+
+        TextView nome = (TextView) findViewById(R.id.menuName);
+        nome.setText(Utils.USER.getNAME() + " " + Utils.USER.getLASTNAME());
+        if (Utils.USER.getPROFILEPHOTO() != "") {
+            Bitmap bitmapProfile = ProfileImage.StringToBitMap(Utils.USER.getPROFILEPHOTO());
+            ImageView profileMenu = (ImageView) findViewById(R.id.menuProfileImage);
+            profileMenu.setImageBitmap(bitmapProfile);
+        }
+
         //creo il recyclerview per contenere le foto
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.imagegallery);
         recyclerView.setHasFixedSize(true);
@@ -77,6 +92,8 @@ public class GalleryActivity extends AppCompatActivity {
         return theimage;
     }
 
+
+    //regione MENU
     public void ClickMenu(View view)
     {
         //Apro il drawer
@@ -112,11 +129,13 @@ public class GalleryActivity extends AppCompatActivity {
 
     public void ClickMyChampionship(View view){
         Intent intent = new Intent(GalleryActivity.this, MyChampionshipActivity.class);
+        intent.putExtra("userId", userId);
         startActivity(intent);
     }
 
     public void ClickChampionship(View view){
         Intent intent = new Intent(GalleryActivity.this, ChampionshipsActivity.class);
+        intent.putExtra("userId", userId);
         startActivity(intent);
     }
 
@@ -137,5 +156,7 @@ public class GalleryActivity extends AppCompatActivity {
         super.onPause();
         closeDrawer(drawerLayout);
     }
+
+    //endregion
 
 }

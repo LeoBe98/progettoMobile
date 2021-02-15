@@ -63,7 +63,8 @@
                     android:textColor="@color/design_default_color_surface"
                     android:textSize="30sp"
                     android:textStyle="bold"
-                    android:translationZ="1dp" />
+                    android:translationZ="1dp"
+                    android:layout_marginLeft="5dp"/>
 
                 <TextView
                     android:id="@+id/profileBirthdate"
@@ -74,7 +75,8 @@
                     android:textColor="@color/cardview_dark_background"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:translationZ="1dp" />
+                    android:translationZ="1dp"
+                    android:layout_marginLeft="5dp"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -93,7 +95,8 @@
                     android:textColor="@color/cardview_dark_background"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:translationZ="1dp" />
+                    android:translationZ="1dp"
+                    android:layout_marginLeft="5dp"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -109,81 +112,131 @@
                     android:textColor="@color/cardview_dark_background"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:translationZ="1dp" />
+                    android:translationZ="1dp"
+                    android:layout_marginLeft="5dp"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="2dp"
                     android:background="#c0c0c0"/>
-                <TextView
-                    android:id="@+id/ProfileLovedCircuit"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="Loved Circuit"
-                    android:textColor="@color/cardview_dark_background"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:translationZ="1dp" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="2dp"
-                    android:background="#c0c0c0"/>
-                <TextView
-                    android:id="@+id/profileHatedCircuit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="Hated Circuit"
-                    android:textColor="@color/cardview_dark_background"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:translationZ="1dp" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="2dp"
-                    android:background="#c0c0c0"/>
-                <TextView
-                    android:id="@+id/profileRaceNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="Race Number"
-                    android:textColor="@color/cardview_dark_background"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:translationZ="1dp" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="2dp"
-                    android:background="#c0c0c0"/>
-                <TextView
-                    android:id="@+id/profileLovedCar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="Loved Car"
-                    android:textColor="@color/cardview_dark_background"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:translationZ="1dp" />
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/ProfileLovedCircuit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Loved Circuit"
+                        android:textColor="@color/cardview_dark_background"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:translationZ="1dp"
+                        android:layout_marginLeft="5dp"/>
+                    <ImageView
+                        android:id="@+id/editLCircuitProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/icon_edit"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="30dp"/>
+                </LinearLayout>
 
-                <Button
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="#c0c0c0"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/profileHatedCircuit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Hated Circuit"
+                        android:textColor="@color/cardview_dark_background"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:translationZ="1dp"
+                        android:layout_marginLeft="5dp"/>
+                    <ImageView
+                        android:id="@+id/editHCircuitProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/icon_edit"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="30dp"/>
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="#c0c0c0"/>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Edit"
-                    android:layout_gravity="center"
-                    android:background="#f41010"
-                    android:textColor="@color/cardview_light_background"
-                    android:textStyle="bold"
-                    />
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/profileRaceNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Race Number"
+                        android:textColor="@color/cardview_dark_background"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:translationZ="1dp"
+                        android:layout_marginLeft="5dp"/>
+                    <ImageView
+                        android:id="@+id/editNumberProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/icon_edit"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="30dp"/>
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="#c0c0c0"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/profileLovedCar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Loved Car"
+                        android:textColor="@color/cardview_dark_background"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:translationZ="1dp"
+                        android:layout_marginLeft="5dp"/>
+                    <ImageView
+                        android:id="@+id/editCarProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/icon_edit"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="30dp"/>
+                </LinearLayout>
             </LinearLayout>
 
         </ScrollView>
@@ -211,4 +264,3 @@
     </RelativeLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout >
-

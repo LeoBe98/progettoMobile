@@ -57,6 +57,7 @@
             android:orientation="vertical">
 
             <Button
+                android:id="@+id/btn_not_championship_to_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -78,6 +79,7 @@
                 android:textStyle="bold" />
 
             <Button
+                android:id="@+id/btn_not_championship_to_rank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"

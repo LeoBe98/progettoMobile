@@ -22,6 +22,9 @@
         android:layout_marginStart="156dp"
         android:layout_marginTop="356dp"
         android:text="CHOOSE"
+        android:background="#BA1515"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,7 +36,10 @@
         android:layout_marginBottom="52dp"
         android:text="REGISTER"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="#BA1515"
+        android:textColor="#ffffff"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/textView19"
@@ -43,5 +49,6 @@
         android:layout_marginBottom="116dp"
         android:text="Or skip and complete your registration"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

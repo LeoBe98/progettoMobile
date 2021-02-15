@@ -1,2 +1,19 @@
-- Controllo registrazione dati
-- Abbellimento login e registrazione
+- Controllo registrazione dati                              OK
+- Abbellimento login e registrazione                        OK
+- link campionato                                           OK
+- forum                                                     OK
+- immagine campionati                                       OK
+- menu everywhere                                           OK
+- sistema upload immagine                                   OK
+- rank campionato                                           OK
+- edit profile                                              OK
+- modifica nome menu e immagine ovunque                     OK
+- modifica immagine item pilota e team                      OK
+- iscrizione campionato con auto e team                     OK
+- singola gara                                              OK
+
+
+
+- condividi immagine                                        OK
+- notifica
+

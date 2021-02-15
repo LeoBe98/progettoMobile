@@ -71,15 +71,18 @@ public class LoginActivity extends AppCompatActivity {
                     Log.e("debug", "check enter");
                     Cursor cursor = db.getUser(email);
                     getUserData(cursor);
-
-                    if (!email.equals(Utils.USER.getEMAIL()) || !password.equals(Utils.USER.getPASSWORD())) {
-                        //Toast.makeText(LoginActivity.this, "ciaoStronzi "+Utils.USER.toString(), Toast.LENGTH_LONG).show();
-                        Toast.makeText(LoginActivity.this, "Email o password errati", Toast.LENGTH_LONG).show();
+                    if (existEmail(email)) {
+                        Toast.makeText(LoginActivity.this, "Email non presente", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(LoginActivity.this, "Login succesfully", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(intent);
-                        finish();
+                        if (!email.equals(Utils.USER.getEMAIL()) || !password.equals(Utils.USER.getPASSWORD())) {
+                            //Toast.makeText(LoginActivity.this, "ciaoStronzi "+Utils.USER.toString(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, "Email o password errati", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Login succesfully", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
                     }
                 }
             }
@@ -120,7 +123,20 @@ public class LoginActivity extends AppCompatActivity {
         return password.matches(regex);
     }
 
-    public void getUserData(Cursor cursor ){
+    private boolean existEmail(String _email) {
+
+        Cursor getEmail = db.getEmail();
+        for (getEmail.moveToFirst(); !getEmail.isAfterLast(); getEmail.moveToNext()) {
+            String s = getEmail.getString(getEmail.getColumnIndex("email"));
+            if (_email.equals(s))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void getUserData(Cursor cursor) {
         if (cursor.moveToFirst()) {
             Integer id = cursor.getInt(0);
             String name = cursor.getString(1);

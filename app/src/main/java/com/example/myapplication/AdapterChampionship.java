@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication.tools.Championship;
+import com.example.myapplication.tools.ProfileImage;
 
 import java.util.ArrayList;
 
@@ -46,9 +49,13 @@ public class AdapterChampionship extends ArrayAdapter<Championship> {
 
 
         viewHolder.tv_name_championship_lv_item.setText(championship_name);
-        //viewHolder.tv_name_championship_lv_item.setText(championship_logo);
 
-
+       if(championship_name.equals("Leon Supercopa")){
+            viewHolder.iw_logo_championship_lw_item.setImageResource(R.drawable.logochamp0);
+        }
+       else{
+           viewHolder.iw_logo_championship_lw_item.setImageResource(R.drawable.logochamp1);
+        }
         return r;
     }
 
