@@ -10,17 +10,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.myapplication.tools.Race;
+import com.example.myapplication.tools.ObjectRace;
 
 import java.util.ArrayList;
 
-public class AdapterRace extends ArrayAdapter<Race> {
+//Creo l'adapter per le gare
+public class AdapterRace extends ArrayAdapter<ObjectRace> {
 
-    private ArrayList<Race> race;
+    private ArrayList<ObjectRace> race;
     private Activity context;
 
-
-    public AdapterRace(Activity _context, ArrayList<Race> _race) {
+    //Costruttore
+    public AdapterRace(Activity _context, ArrayList<ObjectRace> _race) {
         super(_context, R.layout.item_race, _race);
         this.context = _context;
         this.race = _race;
@@ -29,6 +30,7 @@ public class AdapterRace extends ArrayAdapter<Race> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        //setto il layout
         View r = convertView;
         AdapterRace.ViewHolder viewHolder = null;
         if (r == null) {
@@ -40,10 +42,11 @@ public class AdapterRace extends ArrayAdapter<Race> {
             viewHolder = (AdapterRace.ViewHolder) r.getTag();
         }
 
+        //Recupero le informazioni dalla lista
         String race_name = race.get(position).getCIRCUIT();
         String race_date = race.get(position).getDATA();
 
-
+        //Setto informazioni nell'Item
         viewHolder.tv_name_circuit_lv_item.setText(race_name);
         viewHolder.tv_date_circuit_lv_item.setText(race_date);
 
@@ -52,7 +55,8 @@ public class AdapterRace extends ArrayAdapter<Race> {
     }
 
     class ViewHolder {
-        TextView tv_name_circuit_lv_item,tv_date_circuit_lv_item;
+        //Setto i componenti dell'Item
+        TextView tv_name_circuit_lv_item, tv_date_circuit_lv_item;
 
         ViewHolder(View v) {
             tv_name_circuit_lv_item = v.findViewById(R.id.tv_name_circuit_lv_item);

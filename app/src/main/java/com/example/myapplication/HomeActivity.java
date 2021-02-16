@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.example.myapplication.tools.DBHelper;
 import com.example.myapplication.tools.ProfileImage;
-import com.example.myapplication.tools.ReadFromJson;
 import com.example.myapplication.tools.Utils;
 
 public class HomeActivity extends AppCompatActivity {
@@ -53,15 +52,6 @@ public class HomeActivity extends AppCompatActivity {
         }
 
 
-       /* Bitmap icon1 = BitmapFactory.decodeResource(getResources(),
-                R.drawable.logochamp0);
-        String a1 = ProfileImage.BitMapToString(icon1);
-        Log.e("img1", a1);
-        Bitmap icon2 = BitmapFactory.decodeResource(getResources(),
-                R.drawable.logochamp1);
-        String a2 = ProfileImage.BitMapToString(icon2);
-        Log.e("img2", a2);
-*/
     }
 
 

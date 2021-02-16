@@ -1,7 +1,17 @@
 package com.example.myapplication.tools;
 
-public class Pilot implements Comparable<Pilot> {
+//Creo l'oggetto team che userò per la visualizzazione
+public class ObjectTeam {
 
+    public  Integer ID;
+
+    public Integer getID() {
+        return ID;
+    }
+
+    public void setID(Integer ID) {
+        this.ID = ID;
+    }
 
     public Integer getID_CHAMP() {
         return ID_CHAMP;
@@ -17,14 +27,6 @@ public class Pilot implements Comparable<Pilot> {
 
     public void setNAME(String NAME) {
         this.NAME = NAME;
-    }
-
-    public String getTEAM() {
-        return TEAM;
-    }
-
-    public void setTEAM(String TEAM) {
-        this.TEAM = TEAM;
     }
 
     public String getCAR() {
@@ -45,25 +47,15 @@ public class Pilot implements Comparable<Pilot> {
 
     public  Integer ID_CHAMP;
     public  String NAME;
-    public String TEAM;
     public  String CAR;
     public Integer POINTS;
 
-
-    public Pilot(Integer ID_CHAMP, String NAME, String TEAM, String CAR, Integer POINTS) {
+    public ObjectTeam(Integer ID, Integer ID_CHAMP, String NAME, String CAR, Integer POINTS) {
+        this.ID = ID;
         this.ID_CHAMP = ID_CHAMP;
         this.NAME = NAME;
-        this.TEAM = TEAM;
         this.CAR = CAR;
         this.POINTS = POINTS;
-    }
-
-    @Override
-    public int compareTo(Pilot u) {
-        if (getPOINTS() == null || u.getPOINTS() == null) {
-            return 0;
-        }
-        return getPOINTS().compareTo(u.getPOINTS());
     }
 
 

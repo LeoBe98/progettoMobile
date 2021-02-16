@@ -53,6 +53,7 @@
         android:backgroundTint="#BA1515"
         android:ems="10"
         android:inputType="date"
+        android:hint="dd/mm/yyyyy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

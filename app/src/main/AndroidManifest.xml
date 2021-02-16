@@ -18,13 +18,13 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".NotIscriptionChampionshipRaceActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".IscriptionChampionshipRankActivity"
+        <activity android:name=".InscriptionChampionshipRankActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".IscriptionChampionshipInfoActivity"
+        <activity android:name=".InscriptionChampionshipInfoActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".NotIscriptionChampionshipRankActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".NotIscriptionChampionshipInfoActivity"
+        <activity android:name=".NotInscriptionChampionshipInfoActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".NotInscriptionChampionshipActivity"
             android:theme="@style/AppTheme.NoActionBar"/>

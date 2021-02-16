@@ -17,30 +17,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.tools.DBHelper;
-import com.example.myapplication.tools.Pilot;
+import com.example.myapplication.tools.ObjectPilot;
 import com.example.myapplication.tools.ProfileImage;
-import com.example.myapplication.tools.Team;
+import com.example.myapplication.tools.ObjectTeam;
 import com.example.myapplication.tools.Utils;
 
 import java.util.ArrayList;
 
 public class NotIscriptionChampionshipRankActivity extends AppCompatActivity {
-    Integer champId;
+    Integer champId, userId;
     Button btn_move_info, btn_move_championship;
     DBHelper db;
-    Integer userId;
     DrawerLayout drawerLayout;
     ListView lv_pilot, lv_team;
-    Pilot pilot;
-    ArrayList<Pilot> pilotList;
+    ObjectPilot pilot;
+    ArrayList<ObjectPilot> pilotList;
     AdapterPilot adapterPilot;
-    Team team;
-    ArrayList<Team> teamList;
+    ObjectTeam team;
+    ArrayList<ObjectTeam> teamList;
     AdapterTeam adapterTeam;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_not_iscription_championship_rank);
+        setContentView(R.layout.activity_not_inscription_championship_rank);
         userId = Utils.USER.getID();
         drawerLayout = findViewById(R.id.drawer_layout);
         db = new DBHelper(this);
@@ -51,6 +51,7 @@ public class NotIscriptionChampionshipRankActivity extends AppCompatActivity {
         pilotList = new ArrayList<>();
         teamList = new ArrayList<>();
 
+        //Recupero champId
         Intent i = getIntent();
         if (!i.hasExtra("champId")) {
             Toast.makeText(this, "champId mancante", Toast.LENGTH_LONG).show();
@@ -66,6 +67,7 @@ public class NotIscriptionChampionshipRankActivity extends AppCompatActivity {
             }
         }
 
+        //Set menu
         TextView nome = (TextView) findViewById(R.id.menuName);
         nome.setText(Utils.USER.getNAME() + " " + Utils.USER.getLASTNAME());
         if (Utils.USER.getPROFILEPHOTO() != "") {
@@ -75,49 +77,55 @@ public class NotIscriptionChampionshipRankActivity extends AppCompatActivity {
         }
 
         //region RankPilot
+        //Recupero dati piloti del campionato
         Cursor getRank = db.getPilotByChampionship(champId);
-        for( getRank.moveToFirst(); !getRank.isAfterLast(); getRank.moveToNext() ) {
+        for (getRank.moveToFirst(); !getRank.isAfterLast(); getRank.moveToNext()) {
             Integer idChamp = (getRank.getInt(getRank.getColumnIndex("idCamp")));
             String name = (getRank.getString(getRank.getColumnIndex("name")));
             String team = (getRank.getString(getRank.getColumnIndex("team")));
             String car = (getRank.getString(getRank.getColumnIndex("car")));
             Integer points = (getRank.getInt(getRank.getColumnIndex("points")));
-            pilot = new Pilot(idChamp, name, team, car, points);
+            pilot = new ObjectPilot(idChamp, name, team, car, points);
             pilotList.add(pilot);
         }
+        //Recupero nuovi dati utenti del campionato
         Cursor getUserRank = db.getUserRank(champId);
-        for( getUserRank.moveToFirst(); !getUserRank.isAfterLast(); getUserRank.moveToNext() ) {
+        for (getUserRank.moveToFirst(); !getUserRank.isAfterLast(); getUserRank.moveToNext()) {
             Integer idChamp = champId;
-            String name = (getUserRank.getString(getUserRank.getColumnIndex("name"))+" "+getUserRank.getString(getUserRank.getColumnIndex("lastname")));
+            String name = (getUserRank.getString(getUserRank.getColumnIndex("name")) + " " + getUserRank.getString(getUserRank.getColumnIndex("lastname")));
             String team = "libero";
             String car = "nessuna";
             Integer points = 0;
-            pilot = new Pilot(idChamp, name, team, car, points);
+            pilot = new ObjectPilot(idChamp, name, team, car, points);
             pilotList.add(pilot);
         }
+        //Invio lista all'adapter e lo setto nella listView
         adapterPilot = new AdapterPilot(NotIscriptionChampionshipRankActivity.this, pilotList);
         lv_pilot.setAdapter(adapterPilot);
         //endregion
 
         //region RankTeam
+        //Recupero dati team del campionato
         Cursor getTeamRank = db.getTeamByChampionship(champId);
-        for( getTeamRank.moveToFirst(); !getTeamRank.isAfterLast(); getTeamRank.moveToNext() ) {
+        for (getTeamRank.moveToFirst(); !getTeamRank.isAfterLast(); getTeamRank.moveToNext()) {
             Integer idTeam = (getTeamRank.getInt(getTeamRank.getColumnIndex("idTeam")));
             Integer idChamp = (getTeamRank.getInt(getTeamRank.getColumnIndex("idCamp")));
             String name = (getTeamRank.getString(getTeamRank.getColumnIndex("name")));
             String car = (getTeamRank.getString(getTeamRank.getColumnIndex("car")));
             Integer points = (getTeamRank.getInt(getTeamRank.getColumnIndex("points")));
-            team = new Team(idTeam, idChamp, name, car, points);
+            team = new ObjectTeam(idTeam, idChamp, name, car, points);
             teamList.add(team);
         }
+        //Invio lista all'adapter e lo setto nella listView
         adapterTeam = new AdapterTeam(NotIscriptionChampionshipRankActivity.this, teamList);
         lv_team.setAdapter(adapterTeam);
         //endregion
 
+        //region navigation championship
         btn_move_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NotIscriptionChampionshipRankActivity.this, NotIscriptionChampionshipInfoActivity.class);
+                Intent intent = new Intent(NotIscriptionChampionshipRankActivity.this, NotInscriptionChampionshipInfoActivity.class);
                 intent.putExtra("champId", champId);
                 startActivity(intent);
             }
@@ -131,6 +139,7 @@ public class NotIscriptionChampionshipRankActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //endregion
     }
 
 

@@ -16,9 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.tools.DBHelper;
-import com.example.myapplication.tools.Pilot;
+import com.example.myapplication.tools.ObjectPilot;
 import com.example.myapplication.tools.ProfileImage;
-import com.example.myapplication.tools.Race;
+import com.example.myapplication.tools.ObjectRace;
 import com.example.myapplication.tools.Utils;
 
 import java.util.ArrayList;
@@ -28,23 +28,27 @@ public class NotIscriptionChampionshipRaceActivity extends AppCompatActivity {
     DBHelper db;
     Integer userId, raceId, champId;
     DrawerLayout drawerLayout;
-    Race race;
+    ObjectRace race;
     TextView name;
     ListView lv_pilot;
-    Pilot pilot;
-    ArrayList<Pilot> pilotList;
+    ObjectPilot pilot;
+    ArrayList<ObjectPilot> pilotList;
     AdapterPilot adapterPilot;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_not_iscription_championship_race);
+        setContentView(R.layout.activity_not_inscription_championship_race);
+
+        db = new DBHelper(this);
         userId = Utils.USER.getID();
         drawerLayout = findViewById(R.id.drawer_layout);
-        db = new DBHelper(this);
+
         lv_pilot = (ListView) findViewById(R.id.lv_not_race);
         name = (TextView) findViewById(R.id.notraceName);
+        //inizializzo la lista
         pilotList = new ArrayList<>();
 
+        //Recupero raceId
         Intent i = getIntent();
         if (!i.hasExtra("raceId")) {
             Toast.makeText(this, "raceId mancante", Toast.LENGTH_LONG).show();
@@ -59,6 +63,7 @@ public class NotIscriptionChampionshipRaceActivity extends AppCompatActivity {
                 startActivity(new_i);
             }
         }
+        //Recupero champId
         if (!i.hasExtra("champId")) {
             Toast.makeText(this, "champId mancante", Toast.LENGTH_LONG).show();
             Intent new_i = new Intent(this, LoginActivity.class);
@@ -73,7 +78,7 @@ public class NotIscriptionChampionshipRaceActivity extends AppCompatActivity {
             }
         }
 
-
+        //Set menu
         TextView nome = (TextView) findViewById(R.id.menuName);
         nome.setText(Utils.USER.getNAME() + " " + Utils.USER.getLASTNAME());
         if (Utils.USER.getPROFILEPHOTO() != "") {
@@ -81,13 +86,15 @@ public class NotIscriptionChampionshipRaceActivity extends AppCompatActivity {
             ImageView profileMenu = (ImageView) findViewById(R.id.menuProfileImage);
             profileMenu.setImageBitmap(bitmapProfile);
         }
+
+        //Recupero dati corsa
         Cursor getRace = db.getRace(raceId);
         for (getRace.moveToFirst(); !getRace.isAfterLast(); getRace.moveToNext()) {
             Integer id_cal = (getRace.getInt(getRace.getColumnIndex("id")));
             Integer id_camp = (getRace.getInt(getRace.getColumnIndex("idCamp")));
             String circuit = (getRace.getString(getRace.getColumnIndex("circuit")));
             String data = (getRace.getString(getRace.getColumnIndex("data")));
-            race = new Race(id_cal, id_camp, circuit, data);
+            race = new ObjectRace(id_cal, id_camp, circuit, data);
         }
 
         name.setText(race.getCIRCUIT());
@@ -99,13 +106,13 @@ public class NotIscriptionChampionshipRaceActivity extends AppCompatActivity {
             String team = (getRank.getString(getRank.getColumnIndex("team")));
             String car = (getRank.getString(getRank.getColumnIndex("car")));
             Integer points = (int) (Math.random() * 20);
-            pilot = new Pilot(idChamp, name, team, car, points);
+            pilot = new ObjectPilot(idChamp, name, team, car, points);
             pilotList.add(pilot);
-
-
         }
+        //Riordino la lista in modo decrescente con i valori casuali di punti
         Collections.sort(pilotList);
         Collections.reverse(pilotList);
+        //Invio la lista e setto l'adapter nella listView
         adapterPilot = new AdapterPilot(NotIscriptionChampionshipRaceActivity.this, pilotList);
         lv_pilot.setAdapter(adapterPilot);
     }

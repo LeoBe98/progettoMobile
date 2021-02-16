@@ -16,7 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myapplication.tools.Championship;
+import com.example.myapplication.tools.ObjectChampionship;
 import com.example.myapplication.tools.DBHelper;
 import com.example.myapplication.tools.ProfileImage;
 import com.example.myapplication.tools.Utils;
@@ -25,25 +25,26 @@ import java.util.ArrayList;
 
 public class MyChampionshipActivity extends AppCompatActivity {
     DBHelper db;
-    ArrayList<Championship> mychampionshipList;
-    Championship mychampionship;
+    ArrayList<ObjectChampionship> mychampionshipList;
+    ObjectChampionship mychampionship;
     ListView lv_mychampionship;
     DrawerLayout drawerLayout;
     Integer userId;
     static AdapterChampionship adapterChampionship;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_championship);
+
         drawerLayout = findViewById(R.id.drawer_layout);
         db = new DBHelper(this);
 
-        mychampionshipList = new ArrayList<Championship>();
+        mychampionshipList = new ArrayList<ObjectChampionship>();
         lv_mychampionship = (ListView) findViewById(R.id.lv_mychampionships);
 
-
+        //Recupero userId
         Intent i = getIntent();
-
         if (!i.hasExtra("userId")) {
             Toast.makeText(this, "userId mancante", Toast.LENGTH_LONG).show();
             Intent new_i = new Intent(this, LoginActivity.class);
@@ -58,6 +59,7 @@ public class MyChampionshipActivity extends AppCompatActivity {
             }
         }
 
+        //Set menu
         TextView nome = (TextView) findViewById(R.id.menuName);
         nome.setText(Utils.USER.getNAME() + " " + Utils.USER.getLASTNAME());
         if (Utils.USER.getPROFILEPHOTO() != "") {
@@ -66,11 +68,9 @@ public class MyChampionshipActivity extends AppCompatActivity {
             profileMenu.setImageBitmap(bitmapProfile);
         }
 
+        //Recupero tutti i campionati in cui l'utente è iscritto
         Cursor getMyChampionship = db.getMyChampionship(userId);
-
         for( getMyChampionship.moveToFirst(); !getMyChampionship.isAfterLast(); getMyChampionship.moveToNext() ) {
-
-
             Integer id  = (getMyChampionship.getInt(getMyChampionship.getColumnIndex("id")));
             String name = (getMyChampionship.getString(getMyChampionship.getColumnIndex("name")));
             String logo = (getMyChampionship.getString(getMyChampionship.getColumnIndex("logo")));
@@ -79,30 +79,27 @@ public class MyChampionshipActivity extends AppCompatActivity {
             String tires_consumption = (getMyChampionship.getString(getMyChampionship.getColumnIndex("tires_consumption")));
             String help = (getMyChampionship.getString(getMyChampionship.getColumnIndex("help")));
             String car_list = (getMyChampionship.getString(getMyChampionship.getColumnIndex("car_list")));
-            mychampionship = new Championship(id, name, logo, flags, fuel_consumption, tires_consumption, help, car_list);
-           // Log.e("before add " +k, toAdd.getNAME());
+            mychampionship = new ObjectChampionship(id, name, logo, flags, fuel_consumption, tires_consumption, help, car_list);
             mychampionshipList.add(mychampionship);
-          //  Log.e("after add " +k, listToAdd.get(k).getNAME() );
-
-
         }
+
+        //Invio all'adapter la lista dei campionati e setto alla listView l'adapter
         adapterChampionship = new AdapterChampionship(MyChampionshipActivity.this, mychampionshipList);
         lv_mychampionship.setAdapter(adapterChampionship);
 
+        //Gestico click sulla listView
         lv_mychampionship.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
                 Intent intent = new Intent(MyChampionshipActivity.this, InscriptionChampionshipActivity.class);
                 intent.putExtra("champId", mychampionshipList.get(i).getID());
                 startActivity(intent);
-
             }
         });
     }
 
 
-    //regione MENU
+    //region MENU
     public void ClickMenu(View view)
     {
         //Apro il drawer

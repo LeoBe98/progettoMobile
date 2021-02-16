@@ -1,6 +1,7 @@
 package com.example.myapplication.tools;
 
-public class Championship {
+//Creo l'oggetto campionato che userò per la visualizzazione
+public class ObjectChampionship {
     public  Integer ID;
     public  String NAME;
     public  String LOGO;
@@ -78,8 +79,8 @@ public class Championship {
 
 
 
-    public Championship (Integer _id, String _name, String _logo, String _flags, String _fuel_consumption,  String _tires_consumption,
-                 String _help, String _car_list) {
+    public ObjectChampionship(Integer _id, String _name, String _logo, String _flags, String _fuel_consumption, String _tires_consumption,
+                              String _help, String _car_list) {
         ID = _id;
         NAME = _name;
         LOGO = _logo;

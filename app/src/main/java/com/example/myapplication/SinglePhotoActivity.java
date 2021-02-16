@@ -39,11 +39,11 @@ public class SinglePhotoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_photo);
-        singlePhoto = (ImageView) findViewById(R.id.singlePhoto);
-        shareButton = (Button) findViewById(R.id.btn_share);
+        db = new DBHelper(this);
         userId = Utils.USER.getID();
         drawerLayout = findViewById(R.id.drawer_layout);
-        db = new DBHelper(this);
+        singlePhoto = (ImageView) findViewById(R.id.singlePhoto);
+        shareButton = (Button) findViewById(R.id.btn_share);
 
         //Set menu
         TextView nome = (TextView) findViewById(R.id.menuName);
@@ -63,13 +63,13 @@ public class SinglePhotoActivity extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               shareImage(SinglePhotoActivity.this, resID);
+                shareImage(SinglePhotoActivity.this, resID);
             }
         });
     }
 
-    public static void shareImage(Activity context, Integer resource_id) {
-        Bitmap b = BitmapFactory.decodeResource(context.getResources(), resource_id);
+    public static void shareImage(Activity context, Integer resID) {
+        Bitmap b = BitmapFactory.decodeResource(context.getResources(), resID);
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("image/jpeg");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -77,7 +77,7 @@ public class SinglePhotoActivity extends AppCompatActivity {
         String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), b, "Title", null);
         Uri imageUri = Uri.parse(path);
         share.putExtra(Intent.EXTRA_STREAM, imageUri);
-        context.startActivity(Intent.createChooser(share, "Select"));
+        context.startActivity(Intent.createChooser(share, "Share image..."));
     }
 
     //region MENU

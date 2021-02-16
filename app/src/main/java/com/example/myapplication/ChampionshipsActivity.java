@@ -7,7 +7,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myapplication.tools.Championship;
+import com.example.myapplication.tools.ObjectChampionship;
 import com.example.myapplication.tools.DBHelper;
 import com.example.myapplication.tools.ProfileImage;
 import com.example.myapplication.tools.Utils;
@@ -26,22 +25,26 @@ import java.util.ArrayList;
 
 public class ChampionshipsActivity extends AppCompatActivity {
     DBHelper db;
-    ArrayList<Championship> championshipList;
-    Championship championship;
+    ArrayList<ObjectChampionship> championshipList;
+    ObjectChampionship championship;
     ListView lv_championship;
     DrawerLayout drawerLayout;
     Integer userId;
     static AdapterChampionship adapterChampionship;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_championships);
-        drawerLayout = findViewById(R.id.drawer_layout);
+
         db = new DBHelper(this);
+        drawerLayout = findViewById(R.id.drawer_layout);
+
         championshipList = new ArrayList<>();
         lv_championship = (ListView) findViewById(R.id.lv_championships);
-        Intent i = getIntent();
 
+        //Recupero userId
+        Intent i = getIntent();
         if (!i.hasExtra("userId")) {
             Toast.makeText(this, "userId mancante", Toast.LENGTH_LONG).show();
             Intent new_i = new Intent(this, LoginActivity.class);
@@ -56,6 +59,7 @@ public class ChampionshipsActivity extends AppCompatActivity {
             }
         }
 
+        //Set menu
         TextView nome = (TextView) findViewById(R.id.menuName);
         nome.setText(Utils.USER.getNAME() + " " + Utils.USER.getLASTNAME());
         if (Utils.USER.getPROFILEPHOTO() != "") {
@@ -64,6 +68,7 @@ public class ChampionshipsActivity extends AppCompatActivity {
             profileMenu.setImageBitmap(bitmapProfile);
         }
 
+        //Recupero tutti i campionati in cui l'utente non è iscritto
         Cursor getDisponibleChampionship = db.getDisponibleChampionship(userId);
         for( getDisponibleChampionship.moveToFirst(); !getDisponibleChampionship.isAfterLast(); getDisponibleChampionship.moveToNext() ) {
             Integer id  = (getDisponibleChampionship.getInt(getDisponibleChampionship.getColumnIndex("id")));
@@ -74,35 +79,26 @@ public class ChampionshipsActivity extends AppCompatActivity {
             String tires_consumption = (getDisponibleChampionship.getString(getDisponibleChampionship.getColumnIndex("tires_consumption")));
             String help = (getDisponibleChampionship.getString(getDisponibleChampionship.getColumnIndex("help")));
             String car_list = (getDisponibleChampionship.getString(getDisponibleChampionship.getColumnIndex("car_list")));
-            championship = new Championship(id, name, logo, flags, fuel_consumption, tires_consumption, help, car_list);
-            // Log.e("before add " +k, toAdd.getNAME());
+            championship = new ObjectChampionship(id, name, logo, flags, fuel_consumption, tires_consumption, help, car_list);
             championshipList.add(championship);
-            //  Log.e("after add " +k, listToAdd.get(k).getNAME() );
-
-
         }
 
-
-
-
+        //Invio all'adapter la lista dei campionati e setto alla listView l'adapter
         adapterChampionship = new AdapterChampionship(ChampionshipsActivity.this, championshipList);
         lv_championship.setAdapter(adapterChampionship);
 
-
+        //Gestisco click sulla listView
         lv_championship.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
                 Intent intent = new Intent(ChampionshipsActivity.this, NotInscriptionChampionshipActivity.class);
                 intent.putExtra("champId", championshipList.get(i).getID());
                 startActivity(intent);
-
             }
         });
     }
 
-
-    //METODI MENU
+    //region MENU
     public void ClickMenu(View view)
     {
         //Apro il drawer
@@ -166,6 +162,6 @@ public class ChampionshipsActivity extends AppCompatActivity {
     }
 
 
-
+    //endregion
 
 }

@@ -1,6 +1,7 @@
 package com.example.myapplication.tools;
 
-public class Race {
+//Creo l'oggetto gara che userò per la visualizzazione
+public class ObjectRace {
 
     public  Integer ID;
     public  Integer ID_CHAMP;
@@ -8,7 +9,7 @@ public class Race {
     public  String DATA;
 
 
-    public Race(Integer _id, Integer _id_Champ, String _circuit, String _data) {
+    public ObjectRace(Integer _id, Integer _id_Champ, String _circuit, String _data) {
         this.ID = _id;
         this.ID_CHAMP = _id_Champ;
         this.CIRCUIT = _circuit;

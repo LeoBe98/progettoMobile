@@ -15,6 +15,7 @@ import com.example.myapplication.SinglePhotoActivity;
 
 import java.util.ArrayList;
 
+//Adapter per la galleria
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private ArrayList<CreateList> galleryList;
     private Context context;

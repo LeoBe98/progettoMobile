@@ -7,10 +7,8 @@ import android.util.Base64;
 import java.io.ByteArrayOutputStream;
 
 public class ProfileImage {
-    public static final int IMAGE_PICK_CODE = 1000;
-    public static final int PERMISSION_CODE = 1001;
 
-    //Converte da immagine a stringa
+    //Converte da immagine a bitmap
     public static String BitMapToString(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
@@ -21,7 +19,7 @@ public class ProfileImage {
         return encodedImage;
     }
 
-    //Converte da stringa a immagine
+    //Converte da stringa a bitmap
     public static Bitmap StringToBitMap(String encodedString) {
         try {
             byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);

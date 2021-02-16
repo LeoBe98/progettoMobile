@@ -1,7 +1,7 @@
 package com.example.myapplication.tools;
 
 public class CreateList {
-
+    //Creo la lista per la galleria
     private String image_title;
     private Integer image_id;
 

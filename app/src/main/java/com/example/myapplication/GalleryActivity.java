@@ -34,6 +34,8 @@ public class GalleryActivity extends AppCompatActivity {
         db = new DBHelper(this);
         userId = Utils.USER.getID();
 
+
+        //Set menu
         TextView nome = (TextView) findViewById(R.id.menuName);
         nome.setText(Utils.USER.getNAME() + " " + Utils.USER.getLASTNAME());
         if (Utils.USER.getPROFILEPHOTO() != "") {
@@ -56,7 +58,7 @@ public class GalleryActivity extends AppCompatActivity {
 
     }
 
-
+    //Nome immagini
     private final String image_titles[] = {
             "img1",
             "img2",
@@ -66,9 +68,18 @@ public class GalleryActivity extends AppCompatActivity {
             "img6",
             "img7",
             "img8",
+            "img9",
+            "img10",
+            "img11",
+            "img12",
+            "img13",
+            "img14",
+            "img15",
+            "img16",
 
     };
 
+    //Id immagini
     private final Integer image_ids[] = {
             R.drawable.img1,
             R.drawable.img2,
@@ -78,6 +89,14 @@ public class GalleryActivity extends AppCompatActivity {
             R.drawable.img6,
             R.drawable.img7,
             R.drawable.img8,
+            R.drawable.img9,
+            R.drawable.img10,
+            R.drawable.img11,
+            R.drawable.img12,
+            R.drawable.img13,
+            R.drawable.img14,
+            R.drawable.img15,
+            R.drawable.img16,
     };
 
     private ArrayList<CreateList> prepareData() {
@@ -93,7 +112,7 @@ public class GalleryActivity extends AppCompatActivity {
     }
 
 
-    //regione MENU
+    //region MENU
     public void ClickMenu(View view)
     {
         //Apro il drawer

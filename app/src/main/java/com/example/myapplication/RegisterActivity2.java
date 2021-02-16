@@ -50,9 +50,6 @@ public class RegisterActivity2 extends AppCompatActivity {
                 lovedCircuit = lovedCircuit_fieldRegister.getText().toString();
                 hatedCircuit = hatedCircuit_fieldRegister.getText().toString();
                 lovedCar = lovedCar_fieldRegister.getText().toString();
-
-
-
                 Intent intent = new Intent(RegisterActivity2.this, RegisterActivity3.class);
               //invio i dati
                 if (checkData(raceNumber, lovedCircuit, hatedCircuit, lovedCar)) {
@@ -76,9 +73,10 @@ public class RegisterActivity2 extends AppCompatActivity {
         });
     }
 
+    //region Check Data
     private boolean checkData(String _raceNumber, String _lovedCircuit, String _hatedCircuit, String _lovedCar) {
         if(_raceNumber.isEmpty() || _lovedCircuit.isEmpty() || _hatedCircuit.isEmpty() || _lovedCar.isEmpty()){
-            Toast.makeText(RegisterActivity2.this, "Completa tutti i campi", Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity2.this, "Complete all fields", Toast.LENGTH_LONG).show();
             return false;
         }
         else if(!checkRaceNumber(_raceNumber)){
@@ -105,4 +103,5 @@ public class RegisterActivity2 extends AppCompatActivity {
         }
         return true;
     }
+    //endregion
 }

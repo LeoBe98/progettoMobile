@@ -1,8 +1,8 @@
 package com.example.myapplication.tools;
 
 import androidx.annotation.NonNull;
-
-public class User {
+//Creo l'oggetto user che userò per la visualizzazione
+public class ObjectUser {
     private static Integer ID;
     private static String NAME;
     private static String LASTNAME;
@@ -19,8 +19,8 @@ public class User {
     private static String PROFILEPHOTO;
 
 
-    public User (Integer _id, String _name, String _lastname, String _birthdate, String _fullAddress,  String _city,
-                                  String _postalCode, String _email, String _password, String _raceNumber, String _lovedCircuit, String _hatedCircuit, String _lovedCar, String _profilephoto) {
+    public ObjectUser(Integer _id, String _name, String _lastname, String _birthdate, String _fullAddress, String _city,
+                      String _postalCode, String _email, String _password, String _raceNumber, String _lovedCircuit, String _hatedCircuit, String _lovedCar, String _profilephoto) {
         ID = _id;
         NAME = _name;
         LASTNAME = _lastname;
@@ -42,7 +42,7 @@ public class User {
     }
 
     public static void setID(Integer ID) {
-        User.ID = ID;
+        ObjectUser.ID = ID;
     }
 
     public static String getNAME() {
@@ -50,7 +50,7 @@ public class User {
     }
 
     public static void setNAME(String NAME) {
-        User.NAME = NAME;
+        ObjectUser.NAME = NAME;
     }
 
     public static String getLASTNAME() {
@@ -58,7 +58,7 @@ public class User {
     }
 
     public static void setLASTNAME(String LASTNAME) {
-        User.LASTNAME = LASTNAME;
+        ObjectUser.LASTNAME = LASTNAME;
     }
 
     public static String getBIRTHDATE() {
@@ -66,7 +66,7 @@ public class User {
     }
 
     public static void setBIRTHDATE(String BIRTHDATE) {
-        User.BIRTHDATE = BIRTHDATE;
+        ObjectUser.BIRTHDATE = BIRTHDATE;
     }
 
     public static String getFULLADDRESS() {
@@ -74,7 +74,7 @@ public class User {
     }
 
     public static void setFULLADDRESS(String FULLADDRESS) {
-        User.FULLADDRESS = FULLADDRESS;
+        ObjectUser.FULLADDRESS = FULLADDRESS;
     }
 
     public static String getCITY() {
@@ -82,7 +82,7 @@ public class User {
     }
 
     public static void setCITY(String CITY) {
-        User.CITY = CITY;
+        ObjectUser.CITY = CITY;
     }
 
     public static String getPOSTALCODE() {
@@ -90,7 +90,7 @@ public class User {
     }
 
     public static void setPOSTALCODE(String POSTALCODE) {
-        User.POSTALCODE = POSTALCODE;
+        ObjectUser.POSTALCODE = POSTALCODE;
     }
 
     public static String getEMAIL() {
@@ -98,7 +98,7 @@ public class User {
     }
 
     public static void setEMAIL(String EMAIL) {
-        User.EMAIL = EMAIL;
+        ObjectUser.EMAIL = EMAIL;
     }
 
     public static String getPASSWORD() {
@@ -106,7 +106,7 @@ public class User {
     }
 
     public static void setPASSWORD(String PASSWORD) {
-        User.PASSWORD = PASSWORD;
+        ObjectUser.PASSWORD = PASSWORD;
     }
 
     public static String getRACENUMBER() {
@@ -114,7 +114,7 @@ public class User {
     }
 
     public static void setRACENUMBER(String RACENUMBER) {
-        User.RACENUMBER = RACENUMBER;
+        ObjectUser.RACENUMBER = RACENUMBER;
     }
 
     public static String getLovedCircuit() {
@@ -122,7 +122,7 @@ public class User {
     }
 
     public static void setLovedCircuit(String lovedCircuit) {
-        User.LOVED_CIRCUIT = lovedCircuit;
+        ObjectUser.LOVED_CIRCUIT = lovedCircuit;
     }
 
     public static String getHatedCircuit() {
@@ -130,7 +130,7 @@ public class User {
     }
 
     public static void setHatedCircuit(String hatedCircuit) {
-        User.HATED_CIRCUIT = hatedCircuit;
+        ObjectUser.HATED_CIRCUIT = hatedCircuit;
     }
 
     public static String getLovedCar() {
@@ -138,7 +138,7 @@ public class User {
     }
 
     public static void setLovedCar(String lovedCar) {
-        User.LOVED_CAR = lovedCar;
+        ObjectUser.LOVED_CAR = lovedCar;
     }
 
     public static String getPROFILEPHOTO() {
@@ -146,7 +146,7 @@ public class User {
     }
 
     public static void setPROFILEPHOTO(String PROFILEPHOTO) {
-        User.PROFILEPHOTO = PROFILEPHOTO;
+        ObjectUser.PROFILEPHOTO = PROFILEPHOTO;
     }
 
     @NonNull

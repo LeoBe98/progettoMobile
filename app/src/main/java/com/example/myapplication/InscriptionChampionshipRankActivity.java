@@ -16,42 +16,45 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myapplication.tools.Championship;
 import com.example.myapplication.tools.DBHelper;
-import com.example.myapplication.tools.Pilot;
+import com.example.myapplication.tools.ObjectPilot;
 import com.example.myapplication.tools.ProfileImage;
-import com.example.myapplication.tools.Team;
+import com.example.myapplication.tools.ObjectTeam;
 import com.example.myapplication.tools.Utils;
 
 import java.util.ArrayList;
 
-public class IscriptionChampionshipRankActivity extends AppCompatActivity {
+public class InscriptionChampionshipRankActivity extends AppCompatActivity {
     DBHelper db;
     Button btn_move_info, btn_move_championship;
-    Integer champId;
-    Integer userId;
+    Integer champId, userId;
     DrawerLayout drawerLayout;
     ListView lv_pilot, lv_team;
-    Pilot pilot;
-    ArrayList<Pilot> pilotList;
+    ObjectPilot pilot;
+    ArrayList<ObjectPilot> pilotList;
     AdapterPilot adapterPilot;
-    Team team;
-    ArrayList<Team> teamList;
+    ObjectTeam team;
+    ArrayList<ObjectTeam> teamList;
     AdapterTeam adapterTeam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_iscription_championship_rank);
+        setContentView(R.layout.activity_inscription_championship_rank);
+
+        db = new DBHelper(this);
         userId = Utils.USER.getID();
         drawerLayout = findViewById(R.id.drawer_layout);
-        db = new DBHelper(this);
+
         btn_move_info = (Button) findViewById(R.id.btn_inscription_rank_to_info);
         btn_move_championship = (Button) findViewById(R.id.btn_inscription_rank_to_championship);
         lv_pilot = (ListView) findViewById(R.id.lv_rank_user_iscription_championship);
         lv_team = (ListView) findViewById(R.id.lv_rank_team_iscription_championship);
+        //Inizializzo le liste
         pilotList = new ArrayList<>();
         teamList = new ArrayList<>();
+
+        //Recupero champId
         Intent i = getIntent();
         if (!i.hasExtra("champId")) {
             Toast.makeText(this, "champId mancante", Toast.LENGTH_LONG).show();
@@ -66,6 +69,8 @@ public class IscriptionChampionshipRankActivity extends AppCompatActivity {
                 startActivity(new_i);
             }
         }
+
+        //Set menu
         TextView nome = (TextView) findViewById(R.id.menuName);
         nome.setText(Utils.USER.getNAME() + " " + Utils.USER.getLASTNAME());
         if (Utils.USER.getPROFILEPHOTO() != "") {
@@ -75,6 +80,7 @@ public class IscriptionChampionshipRankActivity extends AppCompatActivity {
         }
 
         //region RankPilot
+        //Recupero dati piloti del campionato
         Cursor getRank = db.getPilotByChampionship(champId);
         for( getRank.moveToFirst(); !getRank.isAfterLast(); getRank.moveToNext() ) {
             Integer idChamp = (getRank.getInt(getRank.getColumnIndex("idCamp")));
@@ -82,9 +88,10 @@ public class IscriptionChampionshipRankActivity extends AppCompatActivity {
             String team = (getRank.getString(getRank.getColumnIndex("team")));
             String car = (getRank.getString(getRank.getColumnIndex("car")));
             Integer points = (getRank.getInt(getRank.getColumnIndex("points")));
-            pilot = new Pilot(idChamp, name, team, car, points);
+            pilot = new ObjectPilot(idChamp, name, team, car, points);
             pilotList.add(pilot);
         }
+        //Recupero nuovi dati utenti del campionato
         Cursor getUserRank = db.getUserRank(champId);
         for( getUserRank.moveToFirst(); !getUserRank.isAfterLast(); getUserRank.moveToNext() ) {
             Integer idChamp = champId;
@@ -92,14 +99,17 @@ public class IscriptionChampionshipRankActivity extends AppCompatActivity {
             String team = (getUserRank.getString(getUserRank.getColumnIndex("team")));
             String car = (getUserRank.getString(getUserRank.getColumnIndex("car")));
             Integer points = 0;
-            pilot = new Pilot(idChamp, name, team, car, points);
+            pilot = new ObjectPilot(idChamp, name, team, car, points);
             pilotList.add(pilot);
         }
-        adapterPilot = new AdapterPilot(IscriptionChampionshipRankActivity.this, pilotList);
+
+        //Invio lista all'adapter e setto lo stesso alla ListView
+        adapterPilot = new AdapterPilot(InscriptionChampionshipRankActivity.this, pilotList);
         lv_pilot.setAdapter(adapterPilot);
         //endregion
 
         //region RankTeam
+        //Recupero dati team
         Cursor getTeamRank = db.getTeamByChampionship(champId);
         for( getTeamRank.moveToFirst(); !getTeamRank.isAfterLast(); getTeamRank.moveToNext() ) {
             Integer idTeam = (getTeamRank.getInt(getTeamRank.getColumnIndex("idTeam")));
@@ -107,16 +117,20 @@ public class IscriptionChampionshipRankActivity extends AppCompatActivity {
             String name = (getTeamRank.getString(getTeamRank.getColumnIndex("name")));
             String car = (getTeamRank.getString(getTeamRank.getColumnIndex("car")));
             Integer points = (getTeamRank.getInt(getTeamRank.getColumnIndex("points")));
-            team = new Team(idTeam, idChamp, name, car, points);
+            team = new ObjectTeam(idTeam, idChamp, name, car, points);
             teamList.add(team);
         }
-        adapterTeam = new AdapterTeam(IscriptionChampionshipRankActivity.this, teamList);
+
+        //Invio la lista all'adapter e lo setto alla listView
+        adapterTeam = new AdapterTeam(InscriptionChampionshipRankActivity.this, teamList);
         lv_team.setAdapter(adapterTeam);
         //endregion
+
+        //region navigation championsip
         btn_move_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IscriptionChampionshipRankActivity.this, IscriptionChampionshipInfoActivity.class);
+                Intent intent = new Intent(InscriptionChampionshipRankActivity.this, InscriptionChampionshipInfoActivity.class);
                 intent.putExtra("champId", champId);
                 startActivity(intent);
             }
@@ -125,11 +139,12 @@ public class IscriptionChampionshipRankActivity extends AppCompatActivity {
         btn_move_championship.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IscriptionChampionshipRankActivity.this, InscriptionChampionshipActivity.class);
+                Intent intent = new Intent(InscriptionChampionshipRankActivity.this, InscriptionChampionshipActivity.class);
                 intent.putExtra("champId", champId);
                 startActivity(intent);
             }
         });
+        //endregion
     }
 
 
@@ -157,36 +172,36 @@ public class IscriptionChampionshipRankActivity extends AppCompatActivity {
     }
 
     public void ClickHome(View view) {
-        Intent intent = new Intent(IscriptionChampionshipRankActivity.this, HomeActivity.class);
+        Intent intent = new Intent(InscriptionChampionshipRankActivity.this, HomeActivity.class);
         intent.putExtra("userId", userId);
         startActivity(intent);
     }
 
     public void ClickProfile(View view) {
-        Intent intent = new Intent(IscriptionChampionshipRankActivity.this, ProfileActivity.class);
+        Intent intent = new Intent(InscriptionChampionshipRankActivity.this, ProfileActivity.class);
         startActivity(intent);
     }
 
     public void ClickMyChampionship(View view) {
-        Intent intent = new Intent(IscriptionChampionshipRankActivity.this, MyChampionshipActivity.class);
+        Intent intent = new Intent(InscriptionChampionshipRankActivity.this, MyChampionshipActivity.class);
         intent.putExtra("userId", userId);
         startActivity(intent);
     }
 
     public void ClickChampionship(View view) {
-        Intent intent = new Intent(IscriptionChampionshipRankActivity.this, ChampionshipsActivity.class);
+        Intent intent = new Intent(InscriptionChampionshipRankActivity.this, ChampionshipsActivity.class);
         intent.putExtra("userId", userId);
         startActivity(intent);
     }
 
     public void ClickGallery(View view) {
-        Intent intent = new Intent(IscriptionChampionshipRankActivity.this, GalleryActivity.class);
+        Intent intent = new Intent(InscriptionChampionshipRankActivity.this, GalleryActivity.class);
         startActivity(intent);
     }
 
     public void ClickLogOut(View view) {
         db.updateStatus(Utils.STATUS_NOT_LOGGED, -1);
-        Intent intent = new Intent(IscriptionChampionshipRankActivity.this, LoginActivity.class);
+        Intent intent = new Intent(InscriptionChampionshipRankActivity.this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();

@@ -15,43 +15,44 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myapplication.tools.Championship;
+import com.example.myapplication.tools.ObjectChampionship;
 import com.example.myapplication.tools.DBHelper;
-import com.example.myapplication.tools.Race;
+import com.example.myapplication.tools.ObjectRace;
 import com.example.myapplication.tools.Utils;
 
 import java.util.ArrayList;
 
 public class InscriptionChampionshipActivity extends AppCompatActivity {
     DBHelper db;
-    Integer champId;
+    Integer champId, userId;
     Button btn_disiscription, btn_move_info, btn_move_rank;
     TextView nameChampionship;
-    Championship championship;
-    Race race;
-    ArrayList<Race> raceList;
+    ObjectChampionship championship;
+    ObjectRace race;
+    ArrayList<ObjectRace> raceList;
     ListView lv_race;
     AdapterRace adapterRace;
-
-
-    Integer userId;
     DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inscription_championship);
+
+        db = new DBHelper(this);
         userId = Utils.USER.getID();
         drawerLayout = findViewById(R.id.drawer_layout);
 
-        db = new DBHelper(this);
         nameChampionship = (TextView) findViewById(R.id.tv_name_iscription_championship);
         btn_disiscription = (Button) findViewById(R.id.btn_disiscription);
         btn_move_info = (Button) findViewById(R.id.btn_championship_to_info);
         btn_move_rank = (Button) findViewById(R.id.btn_championship_to_rank);
         lv_race = (ListView) findViewById(R.id.lv_races_iscription_championship);
+        //Inizializzo array
         raceList = new ArrayList<>();
-        Intent i = getIntent();
 
+        //Recupero champId
+        Intent i = getIntent();
         if (!i.hasExtra("champId")) {
             Toast.makeText(this, "champId mancante", Toast.LENGTH_LONG).show();
             Intent new_i = new Intent(this, LoginActivity.class);
@@ -67,9 +68,9 @@ public class InscriptionChampionshipActivity extends AppCompatActivity {
         }
 
 
+        //Recupero informazioni del campionato
         Cursor getMyChampionship = db.getChampionship(champId);
         getMyChampionship.moveToFirst();
-
         Integer id = (getMyChampionship.getInt(getMyChampionship.getColumnIndex("id")));
         String name = (getMyChampionship.getString(getMyChampionship.getColumnIndex("name")));
         String logo = (getMyChampionship.getString(getMyChampionship.getColumnIndex("logo")));
@@ -78,36 +79,36 @@ public class InscriptionChampionshipActivity extends AppCompatActivity {
         String tires_consumption = (getMyChampionship.getString(getMyChampionship.getColumnIndex("tires_consumption")));
         String help = (getMyChampionship.getString(getMyChampionship.getColumnIndex("help")));
         String car_list = (getMyChampionship.getString(getMyChampionship.getColumnIndex("car_list")));
-        championship = new Championship(id, name, logo, flags, fuel_consumption, tires_consumption, help, car_list);
+        championship = new ObjectChampionship(id, name, logo, flags, fuel_consumption, tires_consumption, help, car_list);
         nameChampionship.setText(championship.getNAME());
 
-
+        //Recupero informazioni calendario del campionato
         Cursor getCalendarioChampionship = db.getCalendarChampionship(champId);
         for( getCalendarioChampionship.moveToFirst(); !getCalendarioChampionship.isAfterLast(); getCalendarioChampionship.moveToNext() ) {
             Integer id_cal  = (getCalendarioChampionship.getInt(getCalendarioChampionship.getColumnIndex("id")));
             Integer id_camp = (getCalendarioChampionship.getInt(getCalendarioChampionship.getColumnIndex("idCamp")));
             String circuit = (getCalendarioChampionship.getString(getCalendarioChampionship.getColumnIndex("circuit")));
             String data = (getCalendarioChampionship.getString(getCalendarioChampionship.getColumnIndex("data")));
-            race = new Race(id_cal, id_camp, circuit, data);
+            race = new ObjectRace(id_cal, id_camp, circuit, data);
             raceList.add(race);
         }
+
+        //Invio all'adapter la lista di gare del campionato e setto alla listView l'adapter
         adapterRace = new AdapterRace(InscriptionChampionshipActivity.this, raceList);
         lv_race.setAdapter(adapterRace);
 
-
+        //Gestisco il click sulla ListView
         lv_race.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
                 Intent intent = new Intent(InscriptionChampionshipActivity.this, IscriptionChampionshipRaceActivity.class);
                 intent.putExtra("raceId", raceList.get(i).getID());
                 intent.putExtra("champId", champId);
                 startActivity(intent);
-
             }
         });
 
-
+        //Bottone per la disiscrizione
         btn_disiscription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,10 +120,11 @@ public class InscriptionChampionshipActivity extends AppCompatActivity {
             }
         });
 
+        //region navigation championship
         btn_move_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(InscriptionChampionshipActivity.this, IscriptionChampionshipInfoActivity.class);
+                Intent intent = new Intent(InscriptionChampionshipActivity.this, InscriptionChampionshipInfoActivity.class);
                 intent.putExtra("champId", champId);
                 startActivity(intent);
             }
@@ -131,11 +133,12 @@ public class InscriptionChampionshipActivity extends AppCompatActivity {
         btn_move_rank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(InscriptionChampionshipActivity.this, IscriptionChampionshipRankActivity.class);
+                Intent intent = new Intent(InscriptionChampionshipActivity.this, InscriptionChampionshipRankActivity.class);
                 intent.putExtra("champId", champId);
                 startActivity(intent);
             }
         });
+        //endregion
     }
 
     //region MENU

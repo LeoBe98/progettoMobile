@@ -7,19 +7,20 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.myapplication.tools.Team;
+import com.example.myapplication.tools.ObjectTeam;
 
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class AdapterTeam extends ArrayAdapter<Team> {
-    private ArrayList<Team> teams;
+//Creo l'adapter per il team
+public class AdapterTeam extends ArrayAdapter<ObjectTeam> {
+    private ArrayList<ObjectTeam> teams;
     private Activity context;
 
-
-    public AdapterTeam(Activity _context, ArrayList<Team> _teams) {
+    //Costruttore
+    public AdapterTeam(Activity _context, ArrayList<ObjectTeam> _teams) {
         super(_context, R.layout.item_team, _teams);
         this.context = _context;
         this.teams = _teams;
@@ -28,6 +29,7 @@ public class AdapterTeam extends ArrayAdapter<Team> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        //setto il layout
         View r = convertView;
         AdapterTeam.ViewHolder viewHolder = null;
         if (r == null) {
@@ -39,11 +41,11 @@ public class AdapterTeam extends ArrayAdapter<Team> {
             viewHolder = (AdapterTeam.ViewHolder) r.getTag();
         }
 
+        //Recupero le informazioni dalla lista
         String team_name = teams.get(position).getNAME();
         Integer team_points = teams.get(position).getPOINTS();
         String team_car = teams.get(position).getCAR();
-
-
+        //Setto le informazioni nell'item
         viewHolder.tv_name.setText(team_name);
         viewHolder.tv_points.setText(String.valueOf(team_points));
         viewHolder.tv_car.setText(team_car);
@@ -53,6 +55,7 @@ public class AdapterTeam extends ArrayAdapter<Team> {
     }
 
     class ViewHolder {
+        //Setto i componenti dell'item
         TextView tv_name, tv_points, tv_car;
 
         ViewHolder(View v) {

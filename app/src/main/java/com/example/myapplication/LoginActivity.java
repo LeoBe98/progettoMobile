@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.tools.DBHelper;
-import com.example.myapplication.tools.User;
+import com.example.myapplication.tools.ObjectUser;
 import com.example.myapplication.tools.Utils;
 
 
@@ -31,23 +31,13 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         db = new DBHelper(this);
-      /*  if (Utils.STATUS == 0) {
-            Utils.USERLIST = new Users();
-            //aggiungo utente standard
-            User user = new User();
-            Utils.USERLIST.addUser(user);
-            Utils.STATUS = 1;
-            Log.e("user", user.getEMAIL());
-            Log.e("user", Utils.USERLIST.getUser("email@email.it").getEMAIL());
-        }*/
-
 
         loginButton = (Button) findViewById(R.id.login_button);
         registerNow = (TextView) findViewById(R.id.registerNow_text);
         et_email = (EditText) findViewById(R.id.login_email);
         et_password = (EditText) findViewById(R.id.login_password);
 
-
+        //Aggiorno status per mantenere la sessione
         Cursor statusCursor = db.getStatus();
         int status = statusCursor.getInt(statusCursor.getColumnIndex("status"));
         int userId = statusCursor.getInt(statusCursor.getColumnIndex("userId"));
@@ -68,17 +58,15 @@ public class LoginActivity extends AppCompatActivity {
                 password = et_password.getText().toString();
 
                 if (check(email, password)) {
-                    Log.e("debug", "check enter");
                     Cursor cursor = db.getUser(email);
                     getUserData(cursor);
                     if (existEmail(email)) {
-                        Toast.makeText(LoginActivity.this, "Email non presente", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Email not in DB", Toast.LENGTH_LONG).show();
                     } else {
                         if (!email.equals(Utils.USER.getEMAIL()) || !password.equals(Utils.USER.getPASSWORD())) {
-                            //Toast.makeText(LoginActivity.this, "ciaoStronzi "+Utils.USER.toString(), Toast.LENGTH_LONG).show();
-                            Toast.makeText(LoginActivity.this, "Email o password errati", Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, "Email o password wrong", Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(LoginActivity.this, "Login succesfully", Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, "Login succesfully", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();
@@ -91,14 +79,13 @@ public class LoginActivity extends AppCompatActivity {
         registerNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity1.class);
                 startActivity(intent);
-
             }
         });
     }
 
+    //region Check Data Login
     private boolean check(String _email, String _password) {
         if (_email.isEmpty() || _password.isEmpty()) {
             Toast.makeText(LoginActivity.this, "campo vuoto", Toast.LENGTH_LONG).show();
@@ -110,7 +97,6 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "email errata", Toast.LENGTH_LONG).show();
             return false;
         } else return true;
-
     }
 
     private boolean validateEmail(String email) {
@@ -124,7 +110,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean existEmail(String _email) {
-
         Cursor getEmail = db.getEmail();
         for (getEmail.moveToFirst(); !getEmail.isAfterLast(); getEmail.moveToNext()) {
             String s = getEmail.getString(getEmail.getColumnIndex("email"));
@@ -135,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         return true;
     }
+    //endregion
 
     public void getUserData(Cursor cursor) {
         if (cursor.moveToFirst()) {
@@ -154,9 +140,8 @@ public class LoginActivity extends AppCompatActivity {
             String imageString = cursor.getString(13);
             Log.e("debug", email);
             Log.e("debug", "enter cursor");
-
             //SETTO I DATI IN LOCALE PRESI DAL DB
-            Utils.USER = new User(id, name, lastname, birthdate, fullAddress, city, postalcode, email, password, raceNumber, lovedCircuit, hatedCircuit, lovedCar, imageString);
+            Utils.USER = new ObjectUser(id, name, lastname, birthdate, fullAddress, city, postalcode, email, password, raceNumber, lovedCircuit, hatedCircuit, lovedCar, imageString);
             db.updateStatus(Utils.STATUS_LOGGED, id);
 
         }

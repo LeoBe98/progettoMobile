@@ -54,7 +54,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(team);
         populationRank(db);
 
-
+        //Creo la tabella status per mantenere la sessione
         String status = "CREATE TABLE Status (status INTEGER, userId INTEGER)";
         String insertStatus = "INSERT INTO status (Status, userId) VALUES (0, -1)";
         db.execSQL(status);
@@ -74,7 +74,7 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    //USERS
+    //region USER
     public long addUser(String name, String lastname, String birthdate, String fullAddress, String city, String postalCode, String email, String password, String raceNumber, String lovedCircuit, String hatedCircuit, String lovedCar, String profilePhoto) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -118,17 +118,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    //STATUS
-    public Cursor getStatus() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String[] columns = {"status, userId"};
-        Cursor cursor = db.query(TABLE_STATUS, columns, null, null, null, null, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
-        return cursor;
-    }
-
     public Cursor getEmail() {
         SQLiteDatabase db = this.getWritableDatabase();
         String[] columns = {"email"};
@@ -163,7 +152,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return columnsAffected;
     }
 
-
     public int updateLovedCar(String s, Integer user_id){
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -180,7 +168,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return columnsAffected;
     }
 
-
     public int updateFlag(String s, Integer champ_id){
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -189,6 +176,20 @@ public class DBHelper extends SQLiteOpenHelper {
         return columnsAffected;
     }
 
+
+
+    //endregion
+
+    //region STATUS
+    public Cursor getStatus() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] columns = {"status, userId"};
+        Cursor cursor = db.query(TABLE_STATUS, columns, null, null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
 
     public int updateStatus(int status, int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -199,7 +200,9 @@ public class DBHelper extends SQLiteOpenHelper {
         return columnsAffected;
     }
 
-    //Championship
+    //endregion
+
+    //region Championship
     public Cursor getChampionship(Integer champ_id) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "select * from championship where id = ?";
@@ -298,7 +301,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     }
-    //metodi di popula
+
+    //endregion
+
+    //region Popola DB
     public void populationChampionship(SQLiteDatabase db){
         String insertChampionship1 = "INSERT INTO Championship (id, name, logo, flags, fuel_consumption, tires_consumption, help, car_list) VALUES (0, 'Leon Supercopa', '/9j/4AAQSkZJRgABAQAAAQABAAD/4gIoSUNDX1BST0ZJTEUAAQEAAAIYAAAAAAIQAABtbnRyUkdC\n" +
                 "    IFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAA\n" +
@@ -466,5 +472,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(insertTeam1);db.execSQL(insertTeam2);db.execSQL(insertTeam3);db.execSQL(insertTeam4);
         db.execSQL(insertTeam5);db.execSQL(insertTeam6);db.execSQL(insertTeam7);db.execSQL(insertTeam8);
     }
+
+    //endregion
 
 }

@@ -32,17 +32,19 @@ import java.io.IOException;
 public class ProfileActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     DBHelper db;
-    TextView name, birthdate, fullAddress, email, lcircuit, hcircuit, rnumber, lcar;
     Bitmap image;
     String imageString;
-    ImageView iv;
     Button btn_change;
     Integer userId;
-    ImageView l_circuit, h_circuit, l_car, r_number;
+    TextView name, birthdate, fullAddress, email, lcircuit, hcircuit, rnumber, lcar;
+    ImageView l_circuit, h_circuit, l_car, r_number, iv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Setto componenti activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        db = new DBHelper(this);
         userId = Utils.USER.getID();
         drawerLayout = findViewById(R.id.drawer_layout);
         name = findViewById(R.id.profileName);
@@ -59,8 +61,8 @@ public class ProfileActivity extends AppCompatActivity {
         h_circuit = (ImageView) findViewById(R.id.editHCircuitProfile);
         l_car = (ImageView) findViewById(R.id.editCarProfile);
         r_number = (ImageView) findViewById(R.id.editNumberProfile);
-        db = new DBHelper(this);
 
+        //Set menu
         TextView nome = (TextView) findViewById(R.id.menuName);
         nome.setText(Utils.USER.getNAME() + " " + Utils.USER.getLASTNAME());
         if (Utils.USER.getPROFILEPHOTO() != "") {
@@ -69,21 +71,22 @@ public class ProfileActivity extends AppCompatActivity {
             profileMenu.setImageBitmap(bitmapProfile);
         }
 
-        name.setText(Utils.USER.getNAME()+ " " + Utils.USER.getLASTNAME());
-        birthdate.setText("Birthdate: " +Utils.USER.getBIRTHDATE());
-        fullAddress.setText("Full Address: " +Utils.USER.getFULLADDRESS());
-        email.setText("Email: " +Utils.USER.getEMAIL());
-        lcircuit.setText("Loved Circuit: " +Utils.USER.getLovedCircuit());
-        hcircuit.setText("Hated Circuit: " +Utils.USER.getHatedCircuit());
-        rnumber.setText("Race Number: " +Utils.USER.getRACENUMBER());
-        lcar.setText("Loved Car: " +Utils.USER.getLovedCar());
+        //Recupero info utente dall'oggetto user;
+        name.setText(Utils.USER.getNAME() + " " + Utils.USER.getLASTNAME());
+        birthdate.setText("Birthdate: " + Utils.USER.getBIRTHDATE());
+        fullAddress.setText("Full Address: " + Utils.USER.getFULLADDRESS());
+        email.setText("Email: " + Utils.USER.getEMAIL());
+        lcircuit.setText("Loved Circuit: " + Utils.USER.getLovedCircuit());
+        hcircuit.setText("Hated Circuit: " + Utils.USER.getHatedCircuit());
+        rnumber.setText("Race Number: " + Utils.USER.getRACENUMBER());
+        lcar.setText("Loved Car: " + Utils.USER.getLovedCar());
 
-        if(Utils.USER.getPROFILEPHOTO() != null) {
+        //Controllo se l'utente ha caricato un immagine durante la registrazione
+        if (Utils.USER.getPROFILEPHOTO() != null) {
             image = ProfileImage.StringToBitMap(Utils.USER.getPROFILEPHOTO());
             iv.setImageBitmap(image);
             iv.setZ(2);
         }
-
 
 
         //region UPDATE button
@@ -92,7 +95,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 uploadImage();
-
             }
         });
 
@@ -123,6 +125,7 @@ public class ProfileActivity extends AppCompatActivity {
                 ChangeRaceNumber(ProfileActivity.this);
             }
         });
+
         //endregion
     }
 
@@ -133,6 +136,7 @@ public class ProfileActivity extends AppCompatActivity {
         cdd.show();
     }
 
+    //Dialog per aggiornare il circuito amato
     private class CustomDialogLovedCircuit extends Dialog implements android.view.View.OnClickListener {
 
         public Activity c;
@@ -162,23 +166,18 @@ public class ProfileActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.dialog_confirm_loved_circuit_type_yes:
-                   String s = loved_circuit.getText().toString();
-                    if(s.isEmpty()){
+                    String s = loved_circuit.getText().toString();
+                    if (s.isEmpty()) {
 
-                        Toast.makeText(ProfileActivity.this, "Campo vuoto", Toast.LENGTH_LONG).show();
-                    }
-                    else {
+                        Toast.makeText(ProfileActivity.this, "Void Field", Toast.LENGTH_LONG).show();
+                    } else {
                         db.updateLovedCircuit(s, userId);
-                        lcircuit.setText("Loved Circuit: " +s);
+                        lcircuit.setText("Loved Circuit: " + s);
                         Utils.USER.setLovedCircuit(s);
                         dismiss();
                     }
-
-                    //
-
                     break;
                 case R.id.dialog_update_loved_circuit_type_no:
-                    //
                     dismiss();
                     break;
                 default:
@@ -194,7 +193,7 @@ public class ProfileActivity extends AppCompatActivity {
         cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         cdd.show();
     }
-
+    //Dialog per aggiornare il circuito odiato
     private class CustomDialogHatedCircuit extends Dialog implements android.view.View.OnClickListener {
 
         public Activity c;
@@ -225,22 +224,17 @@ public class ProfileActivity extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.dialog_confirm_hated_circuit_type_yes:
                     String s = hated_circuit.getText().toString();
-                    if(s.isEmpty()){
+                    if (s.isEmpty()) {
 
                         Toast.makeText(ProfileActivity.this, "Campo vuoto", Toast.LENGTH_LONG).show();
-                    }
-                    else {
+                    } else {
                         db.updateHatedCircuit(s, userId);
-                        hcircuit.setText("Hated Circuit: " +s);
+                        hcircuit.setText("Hated Circuit: " + s);
                         Utils.USER.setHatedCircuit(s);
                         dismiss();
                     }
-
-                    //
-
                     break;
                 case R.id.dialog_update_hated_circuit_type_no:
-                    //
                     dismiss();
                     break;
                 default:
@@ -256,7 +250,7 @@ public class ProfileActivity extends AppCompatActivity {
         cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         cdd.show();
     }
-
+    //Dialog per aggiornare l'auto preferità
     private class CustomDialogLovedCar extends Dialog implements android.view.View.OnClickListener {
 
         public Activity c;
@@ -287,18 +281,14 @@ public class ProfileActivity extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.dialog_confirm_loved_car_type_yes:
                     String s = loved_car.getText().toString();
-                    if(s.isEmpty()){
-
-                        Toast.makeText(ProfileActivity.this, "Campo vuoto", Toast.LENGTH_LONG).show();
-                    }
-                    else {
+                    if (s.isEmpty()) {
+                        Toast.makeText(ProfileActivity.this, "Void Field", Toast.LENGTH_LONG).show();
+                    } else {
                         db.updateLovedCar(s, userId);
                         lcar.setText("Loved Car: " + s);
                         Utils.USER.setLovedCar(s);
                         dismiss();
                     }
-                    //
-
                     break;
                 case R.id.dialog_update_loved_car_type_no:
                     //
@@ -317,7 +307,7 @@ public class ProfileActivity extends AppCompatActivity {
         cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         cdd.show();
     }
-
+    //Dialog per aggiornare il numero di gara preferito
     private class CustomDialogRaceNumber extends Dialog implements android.view.View.OnClickListener {
 
         public Activity c;
@@ -348,21 +338,16 @@ public class ProfileActivity extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.dialog_confirm_race_number_type_yes:
                     String s = race_number.getText().toString();
-                    if(s.isEmpty()){
-
+                    if (s.isEmpty()) {
                         Toast.makeText(ProfileActivity.this, "Void Field", Toast.LENGTH_LONG).show();
-                    }
-                    else if(checkRaceNumber(s)){
+                    } else if (checkRaceNumber(s)) {
                         db.updateRaceNumber(s, userId);
                         rnumber.setText("Race Number: " + s);
                         Utils.USER.setRACENUMBER(s);
                         dismiss();
                     }
-                    //
-
                     break;
                 case R.id.dialog_update_race_number_type_no:
-                    //
                     dismiss();
                     break;
                 default:
@@ -391,26 +376,23 @@ public class ProfileActivity extends AppCompatActivity {
     //endregion
 
 
-
-    public void uploadImage(){
+    public void uploadImage() {
         //carico l'immagine
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        ((Activity) this).startActivityForResult(intent, 1000 );
+        ((Activity) this).startActivityForResult(intent, 1000);
 
 
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK)
-        {
+        if (resultCode == RESULT_OK) {
             Uri imageUri = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
                 imageString = ProfileImage.BitMapToString(bitmap);
-                Log.e("USER_ID", ""+Utils.USER.getID());
+                Log.e("USER_ID", "" + Utils.USER.getID());
                 db.updateImage(imageString, Utils.USER.getID());
                 Utils.USER.setPROFILEPHOTO(imageString);
                 recreate();
@@ -425,9 +407,8 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
-//region MENU
-    public void ClickMenu(View view)
-    {
+    //region MENU
+    public void ClickMenu(View view) {
         //Apro il drawer
         openDrawer(drawerLayout);
 
@@ -438,45 +419,45 @@ public class ProfileActivity extends AppCompatActivity {
         drawerLayout.openDrawer(GravityCompat.START);
     }
 
-    public void ClickLogo(View view){
+    public void ClickLogo(View view) {
         //chiudo il drawer
         closeDrawer(drawerLayout);
     }
 
     private void closeDrawer(DrawerLayout drawerLayout) {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
     }
 
-    public void ClickHome(View view){
+    public void ClickHome(View view) {
         Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
         intent.putExtra("userId", userId);
         startActivity(intent);
     }
 
-    public void ClickProfile(View view){
+    public void ClickProfile(View view) {
         recreate();
     }
 
-    public void ClickMyChampionship(View view){
+    public void ClickMyChampionship(View view) {
         Intent intent = new Intent(ProfileActivity.this, MyChampionshipActivity.class);
         intent.putExtra("userId", userId);
         startActivity(intent);
     }
 
-    public void ClickChampionship(View view){
+    public void ClickChampionship(View view) {
         Intent intent = new Intent(ProfileActivity.this, ChampionshipsActivity.class);
         intent.putExtra("userId", userId);
         startActivity(intent);
     }
 
-    public void ClickGallery(View view){
+    public void ClickGallery(View view) {
         Intent intent = new Intent(ProfileActivity.this, GalleryActivity.class);
         startActivity(intent);
     }
 
-    public void ClickLogOut(View view){
+    public void ClickLogOut(View view) {
         db.updateStatus(Utils.STATUS_NOT_LOGGED, -1);
         Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

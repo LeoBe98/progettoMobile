@@ -23,43 +23,44 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myapplication.tools.Championship;
+import com.example.myapplication.tools.ObjectChampionship;
 import com.example.myapplication.tools.DBHelper;
 import com.example.myapplication.tools.ProfileImage;
-import com.example.myapplication.tools.Race;
+import com.example.myapplication.tools.ObjectRace;
 import com.example.myapplication.tools.Utils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class NotInscriptionChampionshipActivity extends AppCompatActivity {
     DBHelper db;
-    Integer champId;
+    Integer champId, userId;
     Button btn_inscription, btn_move_info, btn_move_rank;
     TextView nameChampionship;
-    Championship championship;
-    Race race;
-    ArrayList<Race> raceList;
+    ObjectChampionship championship;
+    ObjectRace race;
+    ArrayList<ObjectRace> raceList;
     ListView lv_race;
     AdapterRace adapterRace;
-    Integer userId;
     DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_not_inscription_championship);
+
+        db = new DBHelper(this);
         userId = Utils.USER.getID();
         drawerLayout = findViewById(R.id.drawer_layout);
-        db = new DBHelper(this);
+
         nameChampionship = (TextView) findViewById(R.id.tv_name_not_iscription_championship);
         btn_inscription = (Button) findViewById(R.id.btn_iscription);
         btn_move_info = (Button) findViewById(R.id.btn_not_championship_to_info);
         btn_move_rank = (Button) findViewById(R.id.btn_not_championship_to_rank);
         lv_race = (ListView) findViewById(R.id.lv_races_not_iscription_championship);
         raceList = new ArrayList<>();
-        Intent i = getIntent();
 
+        //recupero champId
+        Intent i = getIntent();
         if (!i.hasExtra("champId")) {
             Toast.makeText(this, "champId mancante", Toast.LENGTH_LONG).show();
             Intent new_i = new Intent(this, LoginActivity.class);
@@ -74,7 +75,7 @@ public class NotInscriptionChampionshipActivity extends AppCompatActivity {
             }
         }
 
-
+        //Set menu
         TextView nome = (TextView) findViewById(R.id.menuName);
         nome.setText(Utils.USER.getNAME() + " " + Utils.USER.getLASTNAME());
         if (Utils.USER.getPROFILEPHOTO() != "") {
@@ -83,10 +84,9 @@ public class NotInscriptionChampionshipActivity extends AppCompatActivity {
             profileMenu.setImageBitmap(bitmapProfile);
         }
 
-
+        //Recupero info campionato
         Cursor getMyChampionship = db.getChampionship(champId);
         getMyChampionship.moveToFirst();
-
         Integer id = (getMyChampionship.getInt(getMyChampionship.getColumnIndex("id")));
         String name = (getMyChampionship.getString(getMyChampionship.getColumnIndex("name")));
         String logo = (getMyChampionship.getString(getMyChampionship.getColumnIndex("logo")));
@@ -95,51 +95,48 @@ public class NotInscriptionChampionshipActivity extends AppCompatActivity {
         String tires_consumption = (getMyChampionship.getString(getMyChampionship.getColumnIndex("tires_consumption")));
         String help = (getMyChampionship.getString(getMyChampionship.getColumnIndex("help")));
         String car_list = (getMyChampionship.getString(getMyChampionship.getColumnIndex("car_list")));
-        championship = new Championship(id, name, logo, flags, fuel_consumption, tires_consumption, help, car_list);
+        championship = new ObjectChampionship(id, name, logo, flags, fuel_consumption, tires_consumption, help, car_list);
         nameChampionship.setText(championship.getNAME());
 
-
+        //Recupero calendario campionato
         Cursor getCalendarioChampionship = db.getCalendarChampionship(champId);
         for (getCalendarioChampionship.moveToFirst(); !getCalendarioChampionship.isAfterLast(); getCalendarioChampionship.moveToNext()) {
             Integer id_cal = (getCalendarioChampionship.getInt(getCalendarioChampionship.getColumnIndex("id")));
             Integer id_camp = (getCalendarioChampionship.getInt(getCalendarioChampionship.getColumnIndex("idCamp")));
             String circuit = (getCalendarioChampionship.getString(getCalendarioChampionship.getColumnIndex("circuit")));
             String data = (getCalendarioChampionship.getString(getCalendarioChampionship.getColumnIndex("data")));
-            race = new Race(id_cal, id_camp, circuit, data);
-            Log.e("circuit", circuit);
-            // Log.e("before add " +k, toAdd.getNAME());
+            race = new ObjectRace(id_cal, id_camp, circuit, data);
             raceList.add(race);
-            //  Log.e("after add " +k, listToAdd.get(k).getNAME() );
         }
+
+        //Invio lista all'adapter e lo setto alla listView
         adapterRace = new AdapterRace(NotInscriptionChampionshipActivity.this, raceList);
         lv_race.setAdapter(adapterRace);
 
-
+        //Gestisco il click
         lv_race.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
                 Intent intent = new Intent(NotInscriptionChampionshipActivity.this, NotIscriptionChampionshipRaceActivity.class);
                 intent.putExtra("raceId", raceList.get(i).getID());
                 intent.putExtra("champId", champId);
                 startActivity(intent);
-
             }
         });
 
+        //Bottone iscrizione
         btn_inscription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Iscription(NotInscriptionChampionshipActivity.this);
-
-
+                Inscription(NotInscriptionChampionshipActivity.this);
             }
         });
 
+        //region navigation championship
         btn_move_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NotInscriptionChampionshipActivity.this, NotIscriptionChampionshipInfoActivity.class);
+                Intent intent = new Intent(NotInscriptionChampionshipActivity.this, NotInscriptionChampionshipInfoActivity.class);
                 intent.putExtra("champId", champId);
                 startActivity(intent);
             }
@@ -153,11 +150,12 @@ public class NotInscriptionChampionshipActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //endregion
     }
 
 
-    //region update loved circuit
-    private void Iscription(Activity a) {
+    //region inscription
+    private void Inscription(Activity a) {
         NotInscriptionChampionshipActivity.CustomDialogInscription cdd = new NotInscriptionChampionshipActivity.CustomDialogInscription(a);
         cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         cdd.show();
@@ -186,6 +184,7 @@ public class NotInscriptionChampionshipActivity extends AppCompatActivity {
             car = (EditText) findViewById(R.id.et_dialog_choose_car);
             team = (EditText) findViewById(R.id.et_dialog_choose_team);
 
+            //Stampo macchine disponibili
             carList.setText("Disponible car: " + championship.getCarList());
 
             update.setOnClickListener(this);
@@ -196,13 +195,11 @@ public class NotInscriptionChampionshipActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             String[] controlCar = championship.CAR_LIST.split(",");
-
             switch (v.getId()) {
                 case R.id.dialog_inscription_type_yes:
                     String s1 = team.getText().toString();
                     String s2 = car.getText().toString();
                     if (s1.isEmpty() || s2.isEmpty()) {
-
                         Toast.makeText(NotInscriptionChampionshipActivity.this, "Void field", Toast.LENGTH_LONG).show();
                     } else if (!checkCar(s2, controlCar)) {
                         Toast.makeText(NotInscriptionChampionshipActivity.this, "Car not disponible, write equals list", Toast.LENGTH_LONG).show();
@@ -213,34 +210,25 @@ public class NotInscriptionChampionshipActivity extends AppCompatActivity {
                         startActivity(intent);
                         dismiss();
                     }
-
-                    //
-
                     break;
                 case R.id.dialog_inscription_type_no:
-                    //
                     dismiss();
                     break;
                 default:
                     break;
             }
-
-
         }
 
         private boolean checkCar(String s2, String[] controlCar) {
+            //Controllo se la macchina inserita è uguale ad una di quelle disponibili
             for (int i = 0; i < controlCar.length; i++) {
                 if (s2.equals(controlCar[i])) {
                     return true;
                 }
             }
-
             return false;
-
         }
     }
-
-
     //endregion
 
 

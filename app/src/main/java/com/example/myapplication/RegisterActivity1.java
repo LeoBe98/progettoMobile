@@ -3,19 +3,16 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.myapplication.tools.Championship;
 import com.example.myapplication.tools.DBHelper;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,6 +29,8 @@ public class RegisterActivity1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register1);
 
+        db = new DBHelper(this);
+
         name_fieldRegister = (EditText) findViewById(R.id.register_name);
         lastname_fieldRegister = (EditText) findViewById(R.id.register_lastname);
         birthdate_fieldRegister = (EditText) findViewById(R.id.register_birthdate);
@@ -43,8 +42,6 @@ public class RegisterActivity1 extends AppCompatActivity {
         passwordRepeat_fieldRegister = (EditText) findViewById(R.id.register_repeatpassword);
 
         continue1_button = (Button) findViewById(R.id.register1_continue);
-
-        db = new DBHelper(this);
 
         continue1_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,19 +74,20 @@ public class RegisterActivity1 extends AppCompatActivity {
         });
     }
 
+    //region checkData
     private boolean checkData(String _name, String _lastname, String _birthdate, String _fullAddress, String _city, String _postalcode, String _email, String _password, String _repeatPassword) {
       if (_name.isEmpty() || _lastname.isEmpty() || _birthdate.isEmpty() || _fullAddress.isEmpty() || _city.isEmpty() || _postalcode.isEmpty() || _email.isEmpty() || _password.isEmpty() || _repeatPassword.isEmpty()) {
-            Toast.makeText(RegisterActivity1.this, "Completa tutti i campi", Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity1.this, "Complete all fields", Toast.LENGTH_LONG).show();
             return false;
         }
         else if(_name.matches(".*\\d.*") || _name.length() <= 3)
         {
-            Toast.makeText(RegisterActivity1.this, "Nome falso", Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity1.this, "Fake name", Toast.LENGTH_LONG).show();
             return false;
         }
         else if(_lastname.matches(".*\\d.*") || _lastname.length() <= 3)
         {
-            Toast.makeText(RegisterActivity1.this, "Cognome falso", Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity1.this, "Fake lastname", Toast.LENGTH_LONG).show();
             return false;
         }
         else if(!checkDate(_birthdate)){
@@ -99,29 +97,27 @@ public class RegisterActivity1 extends AppCompatActivity {
             return false;
         } else if(_city.matches(".*\\d.*") || _city.length() <= 1)
         {
-            Toast.makeText(RegisterActivity1.this, "città inesistente", Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity1.this, "Inexistent City", Toast.LENGTH_LONG).show();
             return false;
         }
         else if (!checkEmail(_email)) {
-            Toast.makeText(RegisterActivity1.this, "Email errata", Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity1.this, "Email Wronk", Toast.LENGTH_LONG).show();
             return false;
         } else if (!disponibleEmail(_email)) {
-            Toast.makeText(RegisterActivity1.this, "Email già presente", Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity1.this, "Email already in db", Toast.LENGTH_LONG).show();
             return false;
         }
         else if(!checkPassword(_password)){
-            Toast.makeText(RegisterActivity1.this, "Password non conforme agli standard", Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity1.this, "Password not compliant with standards", Toast.LENGTH_LONG).show();
             return false;
         }
         else if(!_password.equals(_repeatPassword)){
-            Toast.makeText(RegisterActivity1.this, "Password differenti", Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity1.this, "Different Passwords", Toast.LENGTH_LONG).show();
             return false;
         }
 
-
         return true;
     }
-
 
     private boolean checkDate(String _birthdate) {
         DateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
@@ -129,7 +125,7 @@ public class RegisterActivity1 extends AppCompatActivity {
         try {
             dt.parse(_birthdate);
         } catch (ParseException e) {
-            Toast.makeText(RegisterActivity1.this, "Errore formato data", Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity1.this, "Error data format", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
@@ -139,11 +135,11 @@ public class RegisterActivity1 extends AppCompatActivity {
         try {
             int controlNumber = Integer.parseInt(_postalcode);
             if (_postalcode.length() != 5) {
-                Toast.makeText(RegisterActivity1.this, "Codice postale errato, inserire un numero a 5 cifre", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity1.this, "Wrong postcode, please enter a 5-digit number", Toast.LENGTH_LONG).show();
                 return false;
             }
         } catch (NumberFormatException ex) {
-            Toast.makeText(RegisterActivity1.this, "Codice postale errato", Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity1.this, "postcode wrong", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
@@ -171,5 +167,5 @@ public class RegisterActivity1 extends AppCompatActivity {
         String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
         return password.matches(regex);
     }
-
+    //endregion
 }
